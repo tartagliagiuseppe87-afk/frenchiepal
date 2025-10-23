@@ -7,12 +7,13 @@ export default function Home() {
   return (
     <div className="main-container min-h-screen flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
       
-      {/* IMMAGINE BANNER IN ALTO */}
-      <div className="w-full max-h-64 overflow-hidden shadow-lg">
+      {/* IMMAGINE BANNER IN ALTO (Correzione per non sgranare) */}
+      <div className="w-full max-h-64 overflow-hidden shadow-lg flex justify-center items-center">
           <img 
             src="/hero-image.jpg" 
             alt="Illustrazione di un Bulldog Francese e un altro cane felici in un prato"
-            className="w-full h-64 object-cover" 
+            // w-full h-auto e object-contain mantengono le proporzioni e la qualità
+            className="w-full h-auto max-h-64 object-contain" 
           />
       </div>
 
@@ -31,9 +32,9 @@ export default function Home() {
               Il nostro obiettivo è darti una mano nella gestione e nella cura quotidiana del tuo piccolo: siamo super specializzati nei Bulldog Francesi, ma offriamo un supporto valido e amichevole a tutti i proprietari di cani. 
             </p>
 
-            {/* PULSANTE CENTRALE PER AVVIARE LA CHAT */}
+            {/* PULSANTE CENTRALE (Unico punto di avvio) */}
             <button
-                // Clicca il pulsante nascosto nel widget chat
+                // Clicca il pulsante nascosto nel widget chat per aprirlo
                 onClick={() => {
                     const chatButton = document.getElementById('chat-toggle-button');
                     if (chatButton) chatButton.click();
@@ -47,7 +48,7 @@ export default function Home() {
         </div>
       </header>
       
-      {/* DISCLAIMER CON STILE NEUTRO E POSIZIONE IN BASSO */}
+      {/* DISCLAIMER IN BASSO (Neutro) */}
       <div className="w-full max-w-5xl mx-auto mt-12 mb-4 p-4 border-t border-gray-300">
         <p className="text-sm text-gray-600 text-center">
           ⚠️ **Disclaimer Importante:** FrenchiePal è un assistente virtuale e non fornisce pareri medici veterinari. Le informazioni fornite sono a scopo informativo e **non sostituiscono in alcun modo una consulenza professionale**. Per problemi di salute o emergenze, **contatta immediatamente il tuo veterinario di fiducia.**
