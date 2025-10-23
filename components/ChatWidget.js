@@ -14,7 +14,6 @@ export default function ChatWidget() {
   const [loading, setLoading] = useState(false);
 
   const messagesEndRef = useRef(null); 
-  // 🚨 1. NUOVO RIFERIMENTO PER L'INPUT
   const inputRef = useRef(null); 
 
   const scrollToBottom = () => {
@@ -23,12 +22,10 @@ export default function ChatWidget() {
 
   useEffect(() => {
     scrollToBottom();
-    // 🚨 2. MANTIENI IL FOCUS DOPO LA RISPOSTA
-    // Se la chat è aperta e non sta caricando, metti il focus sull'input
     if (open && !loading && inputRef.current) {
         inputRef.current.focus();
     }
-  }, [messages, open, loading]); // Aggiunto 'loading' alle dipendenze
+  }, [messages, open, loading]);
 
 
   const sendMessage = async () => {
@@ -38,7 +35,6 @@ export default function ChatWidget() {
     setMessages(newMessages);
     setInput("");
     setLoading(true);
-    // Nota: Il focus viene perso qui, ma ripristinato in useEffect quando loading diventa false
 
     const res = await fetch("/api/chat", {
       method: "POST",
@@ -70,26 +66,28 @@ export default function ChatWidget() {
 
       {open && (
         <div 
-          className="fixed bottom-20 right-5 w-80 max-w-[95vw] h-[70vh] bg-white rounded-3xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out overflow-hidden"
+          // 🚨 MODIFICA: Altezza e larghezza ottimizzate per mobile
+          className="fixed bottom-4 right-2 w-72 max-w-[98vw] h-[60vh] bg-white rounded-3xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out overflow-hidden md:w-80 md:h-[70vh] md:right-5 md:bottom-20"
         >
-          {/* Intestazione Chat - chiude usando setOpen(false) */}
+          {/* Intestazione Chat */}
           <div className="bg-[#2a9d8f] text-white p-4 font-semibold flex justify-between items-center rounded-t-3xl">
               <span>Chat con FrenchiePal</span>
               <button onClick={() => setOpen(false)} className="text-2xl font-semibold opacity-90 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
           </div>
 
           {/* Area Messaggi */}
-          <div className="flex-grow p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50">
+          <div className="flex-grow p-4 overflow-y-auto flex flex-col gap-2 bg-gray-50">
             {messages.map((m, i) => (
               <div 
                 key={i} 
-                className={`p-3 max-w-[85%] rounded-3xl text-sm leading-snug shadow-sm transition-all duration-200 ${m.role === "user" ? "self-end bg-[#dcf8c6] rounded-br-md" : "self-start bg-[#2a9d8f] text-white rounded-tl-md"}`}
+                // 🚨 MODIFICA: Dimensione font ridotta a text-xs per compattezza
+                className={`p-3 max-w-[85%] rounded-3xl text-xs leading-snug shadow-sm transition-all duration-200 ${m.role === "user" ? "self-end bg-[#dcf8c6] rounded-br-md" : "self-start bg-[#2a9d8f] text-white rounded-tl-md"}`}
               >
                 {m.content}
               </div>
             ))}
             {loading && (
-                <div className="typing-indicator bg-[#2a9d8f] text-white p-3 max-w-fit rounded-3xl rounded-tl-md self-start text-sm">
+                <div className="typing-indicator bg-[#2a9d8f] text-white p-3 max-w-fit rounded-3xl rounded-tl-md self-start text-xs">
                     FrenchiePal sta scrivendo...
                 </div>
             )}
@@ -100,9 +98,8 @@ export default function ChatWidget() {
           {/* Area Input */}
           <div className="flex border-t border-gray-200 p-3 bg-white">
             <input
-              // 🚨 3. COLLEGA IL RIFERIMENTO ALL'INPUT
               ref={inputRef} 
-              className="flex-grow border border-gray-300 rounded-full px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#2a9d8f] transition-all duration-200"
+              className="flex-grow border border-gray-300 rounded-full px-4 py-3 text-xs outline-none focus:ring-2 focus:ring-[#2a9d8f] transition-all duration-200"
               placeholder="Digita qui il tuo messaggio..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -112,7 +109,7 @@ export default function ChatWidget() {
             <button
               onClick={sendMessage}
               disabled={loading}
-              className="bg-[#2a9d8f] text-white px-4 py-2 ml-2 rounded-full font-semibold hover:bg-[#268d80] disabled:bg-gray-400 transition-colors shadow-md"
+              className="bg-[#2a9d8f] text-white px-4 py-2 ml-2 rounded-full font-semibold hover:bg-[#268d80] disabled:bg-gray-400 transition-colors shadow-md text-xs"
             >
               Invia
             </button>
