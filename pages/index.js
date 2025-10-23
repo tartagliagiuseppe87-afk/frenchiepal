@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react'; // Non serve più useState qui
+import React from 'react'; 
 import ChatWidget from "../components/ChatWidget";
 
 export default function Home() {
@@ -7,12 +7,11 @@ export default function Home() {
   return (
     <div className="main-container min-h-screen flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
       
-      {/* 1) IMMAGINE BANNER IN ALTO */}
+      {/* IMMAGINE BANNER IN ALTO */}
       <div className="w-full max-h-64 overflow-hidden shadow-lg">
           <img 
             src="/hero-image.jpg" 
             alt="Illustrazione di un Bulldog Francese e un altro cane felici in un prato"
-            // w-full h-64 e object-cover la rendono un banner che copre l'area
             className="w-full h-64 object-cover" 
           />
       </div>
@@ -21,7 +20,7 @@ export default function Home() {
       <header className="w-full max-w-5xl mx-auto flex-grow px-4 md:px-8 pt-10">
         <div className="hero-content flex flex-col items-center gap-8 py-10">
           
-          {/* Testo Hero (ora a larghezza intera sotto il banner) */}
+          {/* Testo Hero */}
           <div className="hero-text w-full text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-[#2a9d8f] mb-4">
                 FrenchiePal, il miglior amico del tuo bullo! 🐾
@@ -34,7 +33,7 @@ export default function Home() {
 
             {/* PULSANTE CENTRALE PER AVVIARE LA CHAT */}
             <button
-                // Questo pulsante ora deve cliccare il pulsante flottante nascosto
+                // Clicca il pulsante nascosto nel widget chat
                 onClick={() => {
                     const chatButton = document.getElementById('chat-toggle-button');
                     if (chatButton) chatButton.click();
@@ -55,7 +54,7 @@ export default function Home() {
         </p>
       </div>
       
-      {/* Componente Chat Flottante (gestisce il suo stato internamente) */}
+      {/* Componente Chat Flottante */}
       <ChatWidget />
     </div>
   );
