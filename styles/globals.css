@@ -1,3 +1,9 @@
+/* --- AGGIUNGI QUESTE TRE RIGHE ALL'INIZIO --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* --------------------------------------------- */
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
