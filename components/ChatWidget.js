@@ -1,4 +1,6 @@
-import { useState } from "react";
+// components/ChatWidget.js
+
+import React, { useState } from "react"; // <-- IMPORTAZIONE CORRETTA DI REACT
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
