@@ -1,5 +1,5 @@
 // components/ChatWidget.js
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react"; 
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -13,15 +13,12 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🚨 1. RIFERIMENTO PER LO SCROLL
   const messagesEndRef = useRef(null); 
 
-  // 🚨 2. FUNZIONE DI SCROLL
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 🚨 3. ESEGUI LO SCROLL OGNI VOLTA CHE I MESSAGGI CAMBIANO
   useEffect(() => {
     scrollToBottom();
   }, [messages, open]);
@@ -35,15 +32,12 @@ export default function ChatWidget() {
     setInput("");
     setLoading(true);
 
-    // Lo scroll avviene qui grazie all'useEffect, prima della risposta
-
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: newMessages }),
     });
     
-    // Gestione errore (per sicurezza)
     if (!res.ok) {
         setMessages(current => [...current, { role: "assistant", content: "Ops! Qualcosa è andato storto. Riprova tra un attimo." }]);
         setLoading(false);
@@ -57,18 +51,18 @@ export default function ChatWidget() {
 
   return (
     <>
+      {/* 5) PULSANTE CENTRATO */}
       <button
         onClick={() => setOpen(!open)}
-        // Pulsante verde menta (come nel tuo CSS)
-        className="fixed bottom-5 right-5 bg-[#2a9d8f] text-white px-4 py-3 font-semibold rounded-full shadow-lg z-50 hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px]"
+        className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-[#2a9d8f] text-white px-4 py-3 font-semibold rounded-full shadow-lg z-50 hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px]"
       >
         💬 Chatta con FrenchiePal
       </button>
 
       {open && (
         <div 
-          // Chat box stile popup laterale
-          className="fixed bottom-20 right-5 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
+          // CHAT BOX CENTRATO, MA DEVI ADATTARE PER LA LARGHEZZA
+          className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
         >
           {/* Intestazione Chat */}
           <div className="bg-[#2a9d8f] text-white p-3 font-semibold flex justify-between items-center rounded-t-xl">
