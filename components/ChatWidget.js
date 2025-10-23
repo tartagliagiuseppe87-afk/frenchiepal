@@ -1,8 +1,9 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-// Accettiamo 'open' e 'setOpen' come props dall'esterno (da index.js)
-export default function ChatWidget({ open, setOpen }) { 
+// Rimosse le props, il widget gestisce lo stato internamente come prima
+export default function ChatWidget() {
+  const [open, setOpen] = useState(false); // Stato ripristinato
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -51,14 +52,21 @@ export default function ChatWidget({ open, setOpen }) {
 
   return (
     <>
-      {/* Rimosso il bottone flottante in basso. La chat si apre ora solo dal pulsante principale. */}
+      {/* PULSANTE FLOTTANTE RIPOSIZIONATO IN BASSO A DESTRA */}
+      <button
+        id="chat-toggle-button" // ID usato da index.js per cliccare questo bottone
+        onClick={() => setOpen(!open)}
+        className="fixed bottom-5 right-5 bg-[#2a9d8f] text-white px-4 py-3 font-semibold rounded-full shadow-lg z-50 hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px]"
+      >
+        💬 {open ? 'Chiudi Chat' : 'Apri Chat'}
+      </button>
 
       {open && (
         <div 
-          // Chat box è ancora centrato, ma lo facciamo apparire solo se 'open' è true
-          className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
+          // CHAT BOX RIPOSIZIONATO IN BASSO A DESTRA
+          className="fixed bottom-20 right-5 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
         >
-          {/* Intestazione Chat - chiude usando setOpen(false) */}
+          {/* Intestazione Chat */}
           <div className="bg-[#2a9d8f] text-white p-3 font-semibold flex justify-between items-center rounded-t-xl">
               <span>Chat con FrenchiePal</span>
               <button onClick={() => setOpen(false)} className="text-2xl font-semibold opacity-80 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
