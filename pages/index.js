@@ -5,15 +5,17 @@ import ChatWidget from "../components/ChatWidget";
 export default function Home() {
   
   return (
-    <div className="main-container min-h-screen flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
+    // 🚨 CORREZIONE SFONDO: Manteniamo lo sfondo uniforme su tutta l'area principale
+    <div className="main-container min-h-screen w-full flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
       
-      {/* IMMAGINE BANNER IN ALTO (Correzione per non sgranare e sfondo uniforme) */}
-      <div className="w-full bg-[#f4fbf8] shadow-lg flex justify-center items-center"> 
+      {/* IMMAGINE BANNER IN ALTO (Correzione definitiva per non sgranare) */}
+      {/* Rimuoviamo classi di altezza fissa; usiamo bg-[#f4fbf8] per uniformare lo sfondo attorno all'immagine */}
+      <div className="w-full bg-[#f4fbf8] shadow-lg flex justify-center items-center py-4"> 
           <img 
             src="/hero-image.jpg" 
             alt="Illustrazione di un Bulldog Francese e un altro cane felici in un prato"
-            // inline-block e h-auto mantengono le dimensioni originali, max-w-full lo rende responsive
-            className="inline-block h-auto max-w-full object-contain" 
+            // 🚨 CLASSI DEFINITIVE: max-w-full assicura che non fuoriesca, ma le dimensioni sono dettate dal file.
+            className="inline-block h-auto max-w-full shadow-md rounded-lg" 
           />
       </div>
 
@@ -39,7 +41,6 @@ export default function Home() {
 
             {/* PULSANTE CENTRALE (Unico punto di avvio) */}
             <button
-                // Clicca il pulsante nascosto nel widget chat per aprirlo
                 onClick={() => {
                     const chatButton = document.getElementById('chat-toggle-button');
                     if (chatButton) chatButton.click();
