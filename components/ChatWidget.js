@@ -1,8 +1,8 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-export default function ChatWidget() {
-  const [open, setOpen] = useState(false);
+// Accettiamo 'open' e 'setOpen' come props dall'esterno (da index.js)
+export default function ChatWidget({ open, setOpen }) { 
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -51,20 +51,14 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* 5) PULSANTE CENTRATO */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-[#2a9d8f] text-white px-4 py-3 font-semibold rounded-full shadow-lg z-50 hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px]"
-      >
-        💬 Chatta con FrenchiePal
-      </button>
+      {/* Rimosso il bottone flottante in basso. La chat si apre ora solo dal pulsante principale. */}
 
       {open && (
         <div 
-          // CHAT BOX CENTRATO, MA DEVI ADATTARE PER LA LARGHEZZA
+          // Chat box è ancora centrato, ma lo facciamo apparire solo se 'open' è true
           className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
         >
-          {/* Intestazione Chat */}
+          {/* Intestazione Chat - chiude usando setOpen(false) */}
           <div className="bg-[#2a9d8f] text-white p-3 font-semibold flex justify-between items-center rounded-t-xl">
               <span>Chat con FrenchiePal</span>
               <button onClick={() => setOpen(false)} className="text-2xl font-semibold opacity-80 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
