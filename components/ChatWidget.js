@@ -1,9 +1,8 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-// Rimosse le props, il widget gestisce lo stato internamente come prima
 export default function ChatWidget() {
-  const [open, setOpen] = useState(false); // Stato ripristinato
+  const [open, setOpen] = useState(false); // Stato per aprire/chiudere
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -52,21 +51,21 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* PULSANTE FLOTTANTE RIPOSIZIONATO IN BASSO A DESTRA */}
+      {/* PULSANTE NASCOSTO: Viene cliccato dal pulsante centrale in index.js */}
       <button
-        id="chat-toggle-button" // ID usato da index.js per cliccare questo bottone
+        id="chat-toggle-button" 
         onClick={() => setOpen(!open)}
-        className="fixed bottom-5 right-5 bg-[#2a9d8f] text-white px-4 py-3 font-semibold rounded-full shadow-lg z-50 hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px]"
+        className="hidden" // Nascondiamo il pulsante
       >
-        💬 {open ? 'Chiudi Chat' : 'Apri Chat'}
+        Toggle Chat
       </button>
 
       {open && (
         <div 
-          // CHAT BOX RIPOSIZIONATO IN BASSO A DESTRA
+          // CHAT BOX POSIZIONATO IN BASSO A DESTRA (come richiesto)
           className="fixed bottom-20 right-5 w-80 max-w-[95vw] h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out"
         >
-          {/* Intestazione Chat */}
+          {/* Intestazione Chat - chiude usando setOpen(false) */}
           <div className="bg-[#2a9d8f] text-white p-3 font-semibold flex justify-between items-center rounded-t-xl">
               <span>Chat con FrenchiePal</span>
               <button onClick={() => setOpen(false)} className="text-2xl font-semibold opacity-80 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
