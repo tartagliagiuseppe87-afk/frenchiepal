@@ -32,6 +32,11 @@ export default function Home() {
               Il nostro obiettivo è darti una mano nella gestione e nella cura quotidiana del tuo piccolo: siamo super specializzati nei Bulldog Francesi, ma offriamo un supporto valido e amichevole a tutti i proprietari di cani. 
             </p>
 
+            {/* NUOVA CTA AGGIUNTA QUI */}
+            <p className="text-2xl font-semibold text-[#2a9d8f] mt-8 mb-4">
+                Dai forza, che aspetti a provarlo! È gratis!
+            </p>
+
             {/* PULSANTE CENTRALE (Unico punto di avvio) */}
             <button
                 // Clicca il pulsante nascosto nel widget chat per aprirlo
@@ -39,7 +44,7 @@ export default function Home() {
                     const chatButton = document.getElementById('chat-toggle-button');
                     if (chatButton) chatButton.click();
                 }}
-                className="inline-block mt-8 mb-4 bg-[#2a9d8f] text-white px-8 py-3 font-semibold rounded-full shadow-lg hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px] text-xl"
+                className="inline-block mb-4 bg-[#2a9d8f] text-white px-8 py-3 font-semibold rounded-full shadow-lg hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px] text-xl"
             >
                 💬 Avvia una chiacchierata
             </button>
