@@ -7,13 +7,13 @@ export default function Home() {
   return (
     <div className="main-container min-h-screen flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
       
-      {/* IMMAGINE BANNER IN ALTO (Correzione per non sgranare) */}
-      <div className="w-full max-h-64 overflow-hidden shadow-lg flex justify-center items-center">
+      {/* IMMAGINE BANNER IN ALTO (Correzione per non sgranare e sfondo uniforme) */}
+      <div className="w-full bg-[#f4fbf8] shadow-lg flex justify-center items-center"> 
           <img 
             src="/hero-image.jpg" 
             alt="Illustrazione di un Bulldog Francese e un altro cane felici in un prato"
-            // w-full h-auto e object-contain mantengono le proporzioni e la qualità
-            className="w-full h-auto max-h-64 object-contain" 
+            // inline-block e h-auto mantengono le dimensioni originali, max-w-full lo rende responsive
+            className="inline-block h-auto max-w-full object-contain" 
           />
       </div>
 
@@ -32,7 +32,7 @@ export default function Home() {
               Il nostro obiettivo è darti una mano nella gestione e nella cura quotidiana del tuo piccolo: siamo super specializzati nei Bulldog Francesi, ma offriamo un supporto valido e amichevole a tutti i proprietari di cani. 
             </p>
 
-            {/* NUOVA CTA AGGIUNTA QUI */}
+            {/* CTA in verde prima del bottone */}
             <p className="text-2xl font-semibold text-[#2a9d8f] mt-8 mb-4">
                 Dai forza, che aspetti a provarlo! È gratis!
             </p>
@@ -60,7 +60,7 @@ export default function Home() {
         </p>
       </div>
       
-      {/* Componente Chat Flottante */}
+      {/* Componente Chat Flottante (gestisce l'apertura a destra) */}
       <ChatWidget />
     </div>
   );
