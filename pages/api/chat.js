@@ -1,6 +1,6 @@
-// pages/api/chat.js (Rimosso il salvataggio del log)
+// pages/api/chat.js
 import OpenAI from "openai";
-// Rimuovi l'import del vecchio log: import { saveChatLog } from "../../utils/firestore"; 
+import { updateChatSession } from "../../utils/firestore"; // <-- IMPORTIAMO LA FUNZIONE DI AGGIORNAMENTO
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const { messages, sessionId } = req.body; 
-  if (!messages) return res.status(400).json({ error: "No messages provided" });
+  if (!messages || !sessionId) return res.status(400).json({ error: "Dati sessione o messaggi mancanti." });
 
   const systemPrompt = `
 Sei "FrenchiePal", assistente per proprietari di Bulldog Francesi 🐾.
@@ -29,7 +29,11 @@ Rispetta queste regole:
 
     const reply = completion.choices[0].message.content;
 
-    // 🚨 Rimosso il codice saveChatLog qui
+    // 🚨 COSTRUISCI LA CRONOLOGIA FINALE (messaggi originali + la nuova risposta AI)
+    const finalMessages = [...messages, { role: "assistant", content: reply }];
+
+    // 🚨 SALVATAGGIO/AGGIORNAMENTO: Aggiorna il documento in Firestore
+    await updateChatSession(sessionId, finalMessages);
 
     res.status(200).json({ reply });
   } catch (err) {
