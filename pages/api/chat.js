@@ -1,6 +1,6 @@
 // pages/api/chat.js
 import OpenAI from "openai";
-import { updateChatSession } from "../../utils/firestore"; // <-- IMPORTIAMO LA FUNZIONE DI AGGIORNAMENTO
+import { updateChatSession } from "../../utils/firestore"; // <-- Importa la funzione di aggiornamento
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -29,10 +29,10 @@ Rispetta queste regole:
 
     const reply = completion.choices[0].message.content;
 
-    // 🚨 COSTRUISCI LA CRONOLOGIA FINALE (messaggi originali + la nuova risposta AI)
+    // COSTRUISCI LA CRONOLOGIA FINALE (messaggi originali + la nuova risposta AI)
     const finalMessages = [...messages, { role: "assistant", content: reply }];
 
-    // 🚨 SALVATAGGIO/AGGIORNAMENTO: Aggiorna il documento in Firestore
+    // 🚨 SALVATAGGIO: Aggiorna il documento in Firestore ad ogni messaggio
     await updateChatSession(sessionId, finalMessages);
 
     res.status(200).json({ reply });
