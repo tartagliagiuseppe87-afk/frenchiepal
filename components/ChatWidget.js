@@ -1,6 +1,18 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
+// Funzione per creare o recuperare un ID sessione anonimo (salvato nel browser)
+const getOrCreateSessionId = () => {
+    let sessionId = localStorage.getItem('frenchiepal_session_id');
+    if (!sessionId) {
+        // Genera un ID anonimo
+        sessionId = 'anon_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+        localStorage.setItem('frenchiepal_session_id', sessionId);
+    }
+    return sessionId;
+};
+
+
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -15,6 +27,8 @@ export default function ChatWidget() {
 
   const messagesEndRef = useRef(null); 
   const inputRef = useRef(null); 
+
+  const sessionId = getOrCreateSessionId(); // <-- OTTIENI L'ID QUI
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,7 +53,10 @@ export default function ChatWidget() {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: newMessages }),
+      body: JSON.stringify({ 
+          messages: newMessages,
+          sessionId: sessionId // <-- INVIA L'ID AL BACKEND
+      }),
     });
     
     if (!res.ok) {
@@ -66,7 +83,6 @@ export default function ChatWidget() {
 
       {open && (
         <div 
-          // 🚨 MODIFICA: Altezza e larghezza ottimizzate per mobile
           className="fixed bottom-4 right-2 w-72 max-w-[98vw] h-[60vh] bg-white rounded-3xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out overflow-hidden md:w-80 md:h-[70vh] md:right-5 md:bottom-20"
         >
           {/* Intestazione Chat */}
@@ -80,7 +96,6 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <div 
                 key={i} 
-                // 🚨 MODIFICA: Dimensione font ridotta a text-xs per compattezza
                 className={`p-3 max-w-[85%] rounded-3xl text-xs leading-snug shadow-sm transition-all duration-200 ${m.role === "user" ? "self-end bg-[#dcf8c6] rounded-br-md" : "self-start bg-[#2a9d8f] text-white rounded-tl-md"}`}
               >
                 {m.content}
