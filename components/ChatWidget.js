@@ -1,11 +1,10 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-// Funzione per creare o recuperare un ID sessione anonimo (salvato nel browser)
+// La funzione rimane la stessa, ma verrà chiamata in modo sicuro
 const getOrCreateSessionId = () => {
     let sessionId = localStorage.getItem('frenchiepal_session_id');
     if (!sessionId) {
-        // Genera un ID anonimo
         sessionId = 'anon_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
         localStorage.setItem('frenchiepal_session_id', sessionId);
     }
@@ -28,7 +27,15 @@ export default function ChatWidget() {
   const messagesEndRef = useRef(null); 
   const inputRef = useRef(null); 
 
-  const sessionId = getOrCreateSessionId(); // <-- OTTIENI L'ID QUI
+  // 🚨 1. Inizializza lo stato della sessione a null
+  const [sessionId, setSessionId] = useState(null);
+
+  // 🚨 2. Imposta l'ID della sessione SOLO sul client-side (nel browser)
+  useEffect(() => {
+      // Questo codice viene eseguito solo dopo che la pagina è nel browser
+      setSessionId(getOrCreateSessionId());
+  }, []); // L'array vuoto significa: "esegui solo una volta, al caricamento"
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -43,7 +50,9 @@ export default function ChatWidget() {
 
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    // 3. Assicurati che l'ID sessione sia stato caricato prima di inviare
+    if (!input.trim() || !sessionId) return; 
+    
     const userMessage = { role: "user", content: input };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
@@ -55,7 +64,7 @@ export default function ChatWidget() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
           messages: newMessages,
-          sessionId: sessionId // <-- INVIA L'ID AL BACKEND
+          sessionId: sessionId // Usa l'ID dallo stato
       }),
     });
     
