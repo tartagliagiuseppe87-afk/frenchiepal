@@ -1,16 +1,14 @@
-// pages/api/chat.js
+// pages/api/chat.js (Rimosso il salvataggio del log)
 import OpenAI from "openai";
-import { saveChatLog } from "../../utils/firestore"; // <-- Importa la funzione di salvataggio
+// Rimuovi l'import del vecchio log: import { saveChatLog } from "../../utils/firestore"; 
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { messages, sessionId } = req.body; // <-- Riceve l'ID Sessione
+  const { messages, sessionId } = req.body; 
   if (!messages) return res.status(400).json({ error: "No messages provided" });
-
-  const userMessage = messages[messages.length - 1]?.content || "";
 
   const systemPrompt = `
 Sei "FrenchiePal", assistente per proprietari di Bulldog Francesi 🐾.
@@ -31,12 +29,7 @@ Rispetta queste regole:
 
     const reply = completion.choices[0].message.content;
 
-    // SALVATAGGIO LOG
-    await saveChatLog({
-      session_id: sessionId || 'unknown_session', 
-      user_message: userMessage,
-      ai_response: reply,
-    });
+    // 🚨 Rimosso il codice saveChatLog qui
 
     res.status(200).json({ reply });
   } catch (err) {
