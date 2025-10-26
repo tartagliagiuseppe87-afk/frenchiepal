@@ -1,37 +1,39 @@
 // utils/firestore.js
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, setDoc, doc, serverTimestamp } from "firebase/firestore";
 
+// Configurazione (prende i valori dalle Variabili d'Ambiente su Vercel)
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   projectId: process.env.FIREBASE_PROJECT_ID,
-  appId: process.env.FIREBASE_APP_ID, 
+  appId: process.process.env.FIREBASE_APP_ID, 
 };
 
-// 🚨 Ottimizzazione: Controlla se l'app è già stata inizializzata.
-// Usa getApp() se esiste, altrimenti inizializza.
+// Inizializza Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
-// Funzione per salvare il log
-export async function saveChatLog(log) {
+// 🚨 NUOVA FUNZIONE per salvare/aggiornare l'intera sessione
+export async function updateChatSession(sessionId, messages) {
   
-  // 🚨 Controllo ambiente: Se non c'è la chiave API, il log non viene salvato (utile in sviluppo locale)
   if (!firebaseConfig.apiKey) {
     console.warn("⚠️ Firebase non configurato. Log disabilitato (ma la chat funziona).");
     return;
   }
   
   try {
-    // Aggiungiamo un nuovo documento alla collezione "chat_logs"
-    await addDoc(collection(db, "chat_logs"), {
-      session_id: log.session_id,
-      user_message: log.user_message,
-      ai_response: log.ai_response,
-      created_at: serverTimestamp(), // Nome più chiaro per il timestamp
-      source: "frenchiepal_webapp" // Campo opzionale per l'analisi futura
-    });
+    // Usiamo setDoc con l'ID sessione come ID del documento
+    // Se il documento esiste, viene aggiornato; se non esiste, viene creato.
+    const sessionDocRef = doc(db, "live_chat_sessions", sessionId);
+    
+    await setDoc(sessionDocRef, {
+      session_id: sessionId,
+      total_messages: messages.length,
+      history: messages, 
+      last_updated: serverTimestamp(), // Tiene traccia dell'ultimo messaggio
+    }, { merge: true }); // merge: true assicura che non cancelli altri campi
+
   } catch (err) {
-    console.error("Firestore Error: Could not save log", err);
+    console.error("Firestore Error: Could not update session", err);
   }
 }
