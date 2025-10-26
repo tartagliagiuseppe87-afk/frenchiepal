@@ -5,7 +5,6 @@ import React, { useState, useRef, useEffect } from "react";
 const getOrCreateSessionId = () => {
     let sessionId = localStorage.getItem('frenchiepal_session_id');
     if (!sessionId) {
-        // Genera un ID anonimo
         sessionId = 'anon_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
         localStorage.setItem('frenchiepal_session_id', sessionId);
     }
@@ -34,7 +33,10 @@ export default function ChatWidget() {
       setSessionId(getOrCreateSessionId());
   }, []); 
 
-  // Rimosso handleChatClose e logFullConversation qui
+  // La chiusura non salva più
+  const handleChatClose = () => {
+      setOpen(false);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -92,10 +94,10 @@ export default function ChatWidget() {
         <div 
           className="fixed bottom-4 right-2 w-72 max-w-[98vw] h-[60vh] bg-white rounded-3xl shadow-2xl flex flex-col z-50 transition-all duration-300 ease-out overflow-hidden md:w-80 md:h-[70vh] md:right-5 md:bottom-20"
         >
-          {/* Intestazione Chat - usa setOpen(false) direttamente */}
+          {/* Intestazione Chat - usa handleChatClose() */}
           <div className="bg-[#2a9d8f] text-white p-4 font-semibold flex justify-between items-center rounded-t-3xl">
               <span>Chat con FrenchiePal</span>
-              <button onClick={() => setOpen(false)} className="text-2xl font-semibold opacity-90 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
+              <button onClick={handleChatClose} className="text-2xl font-semibold opacity-90 hover:opacity-100 transition-opacity p-0 bg-transparent">&times;</button>
           </div>
 
           {/* Area Messaggi (con scroll) */}
