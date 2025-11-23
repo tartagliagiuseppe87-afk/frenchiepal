@@ -23,7 +23,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Testo esplicativo, senza pulsanti) */}
+      {/* 2. SEZIONE INTRODUTTIVA (Con descrizione) */}
       <div className="flex-none px-4 py-4 md:py-6 text-center bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto">
             <h2 className="text-xl md:text-2xl font-bold text-[#2a9d8f] mb-2">
@@ -36,14 +36,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3. AREA CHAT (Card Centrale) */}
+      {/* 3. AREA CHAT (Occupa tutto lo spazio rimanente e aggiunge padding per la card) */}
       <main className="flex-grow relative w-full max-w-5xl mx-auto flex flex-col items-center justify-center p-4 md:p-6 overflow-hidden"> 
         <div className="w-full max-w-4xl h-full flex flex-col">
             <ChatWidget />
         </div>
       </main>
       
-      {/* 4. FOOTER (Con Disclaimer Completo) */}
+      {/* 4. FOOTER (Con Disclaimer Completo Ripristinato) */}
       <footer className="flex-none py-3 px-4 text-center bg-white border-t border-gray-200 z-20">
         <p className="text-[10px] text-gray-500 px-4 leading-tight">
           ⚠️ **Disclaimer Importante:** FrenchiePal è un assistente virtuale e non fornisce pareri medici veterinari. Le informazioni ricevute **non sostituiscono in alcun modo una consulenza veterinaria professionale**. Per problemi di salute seri o emergenze, contatta immediatamente il tuo veterinario di fiducia.
