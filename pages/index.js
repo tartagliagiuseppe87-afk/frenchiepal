@@ -1,25 +1,22 @@
-// pages/index.js
-import React from 'react'; 
+import React from 'react';
 import ChatWidget from "../components/ChatWidget";
 import Head from 'next/head';
 
 export default function Home() {
-  
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-[#eafaf7] to-[#ffffff] font-poppins text-gray-800 overflow-hidden">
-      
       <Head>
         <title>FrenchiePal - L'esperto del tuo Bulldog</title>
       </Head>
 
       {/* 1. HEADER (Stile Glass) */}
-      <header className="flex-none py-4 px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
+      <header className="flex-none py-3 px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
         <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-sm">
                  <img src="/hero-image.jpg" alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div>
-                <h1 className="text-xl font-bold text-[#2a9d8f] tracking-tight leading-none">
+                <h1 className="text-lg font-bold text-[#2a9d8f] tracking-tight leading-none">
                     FrenchiePal
                 </h1>
                 <span className="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">
@@ -35,26 +32,19 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Testo Ripristinato) */}
-      <div className="flex-none px-6 py-6 text-center">
+      {/* 2. SEZIONE INTRODUTTIVA (Compattata) */}
+      <div className="flex-none px-6 py-3 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
                 Il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
-            
-            {/* Testo richiesto ripristinato */}
-            <div className="text-sm md:text-base text-gray-600 leading-relaxed mb-4 space-y-2">
+            <div className="text-sm text-gray-600 leading-tight mb-2 space-y-1">
                 <p>
-                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em>.
-                </p>
-                <p className="font-medium text-gray-700">
-                  Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
+                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em>. Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
             </div>
-            
-            {/* Card Ingaggio */}
-            <div className="bg-white border border-[#2a9d8f]/20 p-3 rounded-xl shadow-sm inline-block mx-auto mt-2">
-                <p className="text-xs md:text-sm text-gray-600">
+            <div className="bg-white border border-[#2a9d8f]/20 p-2 rounded-lg shadow-sm inline-block mx-auto">
+                <p className="text-xs text-gray-600 leading-tight">
                   🚀 <strong>Ci aiuti a migliorare?</strong> Aiutaci a capire quale problema possiamo risolvere ponendo delle domande specifiche qui sotto.
                 </p>
             </div>
@@ -62,22 +52,20 @@ export default function Home() {
       </div>
 
       {/* 3. AREA CHAT */}
-      <main className="flex-grow relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center px-4 pb-4 overflow-hidden"> 
+      <main className="flex-grow relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center px-4 pb-4 overflow-hidden">
         <div className="w-full h-full shadow-2xl rounded-2xl overflow-hidden border border-gray-100 bg-white">
             <ChatWidget />
         </div>
       </main>
       
-      {/* 4. FOOTER (Font più grande e leggibile) */}
-      <footer className="flex-none py-4 bg-white/50 border-t border-gray-200 text-center z-10 text-xs text-gray-500">
+      {/* 4. FOOTER */}
+      <footer className="flex-none py-3 bg-white/50 border-t border-gray-200 text-center z-10 text-xs text-gray-500">
         <p className="leading-relaxed px-4">
           ⚠️ <strong>Disclaimer:</strong> FrenchiePal è un assistente virtuale, non un veterinario. Le informazioni non sostituiscono una consulenza professionale. In caso di emergenza contatta un medico.
-          <br className="hidden sm:inline" />
           <span className="mx-2 hidden sm:inline">•</span>
           <a href="/privacy" className="hover:text-[#2a9d8f] transition-colors font-semibold mt-1 inline-block sm:mt-0">Privacy Policy</a>
         </p>
       </footer>
-
     </div>
   );
 }
