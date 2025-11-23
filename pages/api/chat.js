@@ -1,6 +1,6 @@
 // pages/api/chat.js
 import OpenAI from "openai";
-import { updateChatSession } from "../../utils/firestore"; // <-- Importa la funzione di aggiornamento
+import { updateChatSession } from "../../utils/firestore"; 
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -19,6 +19,7 @@ Rispetta queste regole:
 4. Risposte brevi (2-3 frasi max), emoji pertinenti.
 5. Mai dare consigli medici; se sintomi → contatta veterinario.
 6. Rispondi solo in italiano.
+7. 🚨 NUOVA REGOLA: Se l'utente menziona il proprio nome, email o indirizzo, rispondi immediatamente con la frase standard: "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶" Non dare l'aiuto richiesto, ma solo questo avviso.
 `;
 
   try {
@@ -29,10 +30,9 @@ Rispetta queste regole:
 
     const reply = completion.choices[0].message.content;
 
-    // COSTRUISCI LA CRONOLOGIA FINALE (messaggi originali + la nuova risposta AI)
     const finalMessages = [...messages, { role: "assistant", content: reply }];
 
-    // 🚨 SALVATAGGIO: Aggiorna il documento in Firestore ad ogni messaggio
+    // SALVATAGGIO: Aggiorna il documento in Firestore ad ogni messaggio
     await updateChatSession(sessionId, finalMessages);
 
     res.status(200).json({ reply });
