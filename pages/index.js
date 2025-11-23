@@ -37,18 +37,18 @@ export default function Home() {
       </header>
 
       {/* 2. SEZIONE INTRODUTTIVA (Compattata) */}
-      <div className="flex-none px-6 py-3 text-center">
+      <div className="flex-none px-6 py-4 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
                 <span className="text-[#2a9d8f]">FrenchiePal</span>, il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
-            <div className="text-sm text-gray-600 leading-tight mb-2 space-y-1">
+            
+            <div className="text-sm text-gray-600 leading-relaxed space-y-2">
                 <p>
-                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>. Stiamo sviluppando un sistema per offrirti le risposte più accurate ai problemi di gestione quotidiana.
+                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em>. Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
-            </div>
-            <div className="bg-white border border-[#2a9d8f]/20 p-2 rounded-lg shadow-sm inline-block mx-auto">
-                <p className="text-xs text-gray-600 leading-tight">
+                {/* Testo integrato qui, colorato per risaltare ma senza box */}
+                <p className="text-[#2a9d8f] font-medium pt-1">
                   🚀 <strong>Ci aiuti a migliorare?</strong> Poni le tue domande specifiche qui sotto.
                 </p>
             </div>
@@ -73,6 +73,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
