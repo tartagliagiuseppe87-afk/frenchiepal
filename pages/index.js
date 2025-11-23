@@ -15,7 +15,7 @@ export default function Home() {
       <header className="flex-none py-3 px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
         <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex items-center justify-center">
-              {/* Usa il nuovo logo trasparente, senza bordi o crop strani */}
+              {/* Usa il nuovo logo trasparente */}
               <img src="/logo.png" alt="FrenchiePal Logo" className="w-full h-full object-contain" />
             </div>
             <div>
@@ -27,7 +27,8 @@ export default function Home() {
                 </span>
             </div>
         </div>
-        {/* MODIFICA QUI: Rimosso 'hidden md:flex', ora è 'flex' per essere sempre visibile */}
+        
+        {/* CORREZIONE QUI: Rimosso 'hidden md:flex', ora è solo 'flex' per essere sempre visibile */}
         <div className="flex items-center gap-2 text-xs text-[#2a9d8f] bg-[#2a9d8f]/10 px-3 py-1 rounded-full font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
               <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
@@ -36,7 +37,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Compattata) */}
+      {/* 2. SEZIONE INTRODUTTIVA (Testo come da tua richiesta) */}
       <div className="flex-none px-6 py-4 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
@@ -47,7 +48,7 @@ export default function Home() {
                 <p>
                   Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>. Stiamo sviluppando un sistema per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
-                {/* Testo integrato qui, colorato per risaltare ma senza box */}
+                
                 <p className="text-[#2a9d8f] font-medium pt-1">
                   🚀 <strong>Ci aiuti a migliorare?</strong> Poni le tue domande specifiche qui sotto.
                 </p>
@@ -73,8 +74,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
-
