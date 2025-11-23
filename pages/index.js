@@ -45,7 +45,7 @@ export default function Home() {
             
             <div className="text-sm text-gray-600 leading-relaxed space-y-2">
                 <p>
-                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em>. Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
+                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>. Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
                 {/* Testo integrato qui, colorato per risaltare ma senza box */}
                 <p className="text-[#2a9d8f] font-medium pt-1">
@@ -73,6 +73,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
