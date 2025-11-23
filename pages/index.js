@@ -45,7 +45,7 @@ export default function Home() {
             </div>
             <div className="bg-white border border-[#2a9d8f]/20 p-2 rounded-lg shadow-sm inline-block mx-auto">
                 <p className="text-xs text-gray-600 leading-tight">
-                  🚀 <strong>Ci aiuti a migliorare?</strong> Aiutaci a migliorare ponendo delle domande specifiche qui sotto.
+                  🚀 <strong>Ci aiuti a migliorare?</strong> Poni le tue domande specifiche qui sotto.
                 </p>
             </div>
         </div>
@@ -69,4 +69,5 @@ export default function Home() {
     </div>
   );
 }
+
 
