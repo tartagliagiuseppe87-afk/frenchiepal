@@ -65,7 +65,7 @@ export default function Home() {
       {/* 4. FOOTER */}
       <footer className="flex-none py-3 bg-white/50 border-t border-gray-200 text-center z-10 text-xs text-gray-500">
         <p className="leading-relaxed px-4">
-          ⚠️ <strong>Disclaimer:</strong> FrenchiePal è un assistente virtuale, non un veterinario. Le informazioni non sostituiscono una consulenza professionale. In caso di emergenza contatta un medico.
+          ⚠️ <strong>Disclaimer:</strong> FrenchiePal è un assistente virtuale, in caso di emergenza contatta un medico veterinario.
           <span className="mx-2 hidden sm:inline">•</span>
           <a href="/privacy" className="hover:text-[#2a9d8f] transition-colors font-semibold mt-1 inline-block sm:mt-0">Clicca qui per Privacy Policy</a>
         </p>
@@ -73,6 +73,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
