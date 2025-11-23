@@ -10,7 +10,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Ciao! Sono FrenchiePal 🐾. Come posso aiutare il tuo Bulldog Francese oggi?",
+        "Ciao! Sono FrenchiePal 🐾. Come posso aiutarti con il tuo amico a quattro zampe oggi? Ma prima mi dici se il tuo cane è un Bullo?"?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -130,3 +130,4 @@ export default function ChatWidget() {
     </div>
   );
 }
+
