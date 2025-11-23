@@ -36,7 +36,7 @@ export default function Home() {
       <div className="flex-none px-6 py-3 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
-                FrenchiePal, il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
+                <span className="text-[#2a9d8f]">FrenchiePal</span>, il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
             <div className="text-sm text-gray-600 leading-tight mb-2 space-y-1">
                 <p>
@@ -69,6 +69,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
