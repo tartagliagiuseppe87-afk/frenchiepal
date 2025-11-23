@@ -23,15 +23,21 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Testo esplicativo, senza pulsanti) */}
+      {/* 2. SEZIONE INTRODUTTIVA (Testo Aggiornato e Ingaggiante) */}
       <div className="flex-none px-4 py-4 md:py-6 text-center bg-white border-b border-gray-100">
-        <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-bold text-[#2a9d8f] mb-2">
+        <div className="max-w-3xl mx-auto space-y-3">
+            <h2 className="text-xl md:text-2xl font-bold text-[#2a9d8f]">
                 Il miglior amico del tuo bullo! 🐾
             </h2>
+            
             <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
-              Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em> e amiamo follemente questi adorabili musetti schiacciati. 
-              Il nostro obiettivo è darti una mano nella gestione e nella cura quotidiana del tuo piccolo: siamo super specializzati nei Bulldog Francesi, ma offriamo un supporto valido e amichevole a tutti i proprietari di cani. 
+              Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie-addicted</em>.
+              <br className="hidden md:inline"/> 
+              <strong>Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.</strong>
+            </p>
+            
+            <p className="text-xs md:text-sm text-[#2a9d8f] font-semibold bg-[#e0f2f1] p-2 rounded-lg inline-block">
+              🚀 Ci aiuti a migliorare? Aiutaci a capire quale problema possiamo risolvere ponendo delle domande specifiche qui sotto!
             </p>
         </div>
       </div>
