@@ -8,6 +8,7 @@ export default function Home() {
     <div className="flex flex-col h-screen bg-gradient-to-b from-[#eafaf7] to-[#ffffff] font-poppins text-gray-800 overflow-hidden">
       <Head>
         <title>FrenchiePal - L'esperto del tuo Bulldog</title>
+        <link rel="icon" href="/logo.png" />
       </Head>
 
       {/* 1. HEADER (Stile Glass) */}
@@ -72,6 +73,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
