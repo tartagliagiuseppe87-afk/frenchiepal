@@ -43,7 +43,7 @@ export default function Home() {
             </h2>
             <div className="text-sm text-gray-600 leading-tight mb-2 space-y-1">
                 <p>
-                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>. Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
+                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>. Stiamo sviluppando un sistema per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
             </div>
             <div className="bg-white border border-[#2a9d8f]/20 p-2 rounded-lg shadow-sm inline-block mx-auto">
@@ -72,4 +72,5 @@ export default function Home() {
     </div>
   );
 }
+
 
