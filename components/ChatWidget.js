@@ -1,7 +1,6 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-// Funzione ID Sessione
 const createNewSessionId = () => {
     return 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
 };
@@ -11,7 +10,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Ciao,🐾come posso aiutare con il tuo bullo oggi?",
+        "Ciao, come posso aiutare il tuo Bulldog Francese oggi🐾?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -73,10 +72,15 @@ export default function ChatWidget() {
             key={i} 
             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
           >
-            {/* Avatar Bot */}
+            {/* MODIFICA QUI: Avatar con il Logo invece del Robot */}
             {m.role === "assistant" && (
-                <div className="w-7 h-7 rounded-full bg-[#eafaf7] flex items-center justify-center mr-2 flex-shrink-0 border border-[#2a9d8f]/20">
-                    <span className="text-[10px]">🤖</span>
+                <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border border-[#2a9d8f]/20 mr-2">
+                    {/* Punta al file logo.png che hai caricato in public */}
+                    <img 
+                        src="/logo.png" 
+                        alt="FrenchiePal" 
+                        className="w-full h-full object-cover"
+                    />
                 </div>
             )}
 
@@ -141,4 +145,3 @@ export default function ChatWidget() {
     </div>
   );
 }
-
