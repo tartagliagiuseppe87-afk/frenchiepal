@@ -1,7 +1,7 @@
 // components/ChatWidget.js
 import React, { useState, useRef, useEffect } from "react"; 
 
-// Funzione ID Sessione (Invariata)
+// Funzione ID Sessione
 const createNewSessionId = () => {
     return 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
 };
@@ -64,29 +64,28 @@ export default function ChatWidget() {
   };
 
   return (
-    // CONTENITORE INTERNO (Senza bordi propri perché li ha il contenitore in index.js)
     <div className="flex flex-col w-full h-full bg-white">
       
       {/* AREA MESSAGGI */}
-      <div className="flex-grow p-4 md:p-6 overflow-y-auto flex flex-col gap-6 bg-white scroll-smooth">
+      <div className="flex-grow p-4 md:p-6 overflow-y-auto flex flex-col gap-4 bg-white scroll-smooth">
         {messages.map((m, i) => (
           <div 
             key={i} 
             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
           >
-            {/* Avatar Bot (Visibile solo per i messaggi dell'assistente) */}
+            {/* Avatar Bot */}
             {m.role === "assistant" && (
-                <div className="w-8 h-8 rounded-full bg-[#eafaf7] flex items-center justify-center mr-2 flex-shrink-0 border border-[#2a9d8f]/20">
-                    <span className="text-xs">🤖</span>
+                <div className="w-7 h-7 rounded-full bg-[#eafaf7] flex items-center justify-center mr-2 flex-shrink-0 border border-[#2a9d8f]/20">
+                    <span className="text-[10px]">🤖</span>
                 </div>
             )}
 
             <div 
               className={`
-                max-w-[85%] md:max-w-[75%] p-3.5 rounded-2xl text-[15px] leading-relaxed shadow-sm
+                max-w-[85%] md:max-w-[75%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm
                 ${m.role === "user" 
-                  ? "bg-[#2a9d8f] text-white rounded-tr-none" // Stile Utente: Verde pieno, moderno
-                  : "bg-[#f4f6f8] text-gray-800 rounded-tl-none border border-gray-100" // Stile Bot: Grigio soft
+                  ? "bg-[#2a9d8f] text-white rounded-tr-none" // Utente
+                  : "bg-[#f4f6f8] text-gray-800 rounded-tl-none border border-gray-100" // Bot
                 }
               `}
             >
@@ -95,25 +94,24 @@ export default function ChatWidget() {
           </div>
         ))}
         
-        {/* Loading State Moderno */}
         {loading && (
-            <div className="flex justify-start items-center ml-10">
-                <div className="bg-[#f4f6f8] px-4 py-3 rounded-2xl rounded-tl-none border border-gray-100 flex space-x-1">
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></div>
+            <div className="flex justify-start items-center ml-9">
+                <div className="bg-[#f4f6f8] px-3 py-2 rounded-2xl rounded-tl-none border border-gray-100 flex space-x-1">
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-75"></div>
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-150"></div>
                 </div>
             </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* AREA INPUT (Stile "Pillola" Flottante) */}
-      <div className="p-4 bg-white border-t border-gray-50">
-        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full px-2 py-2 shadow-sm focus-within:ring-2 focus-within:ring-[#2a9d8f]/50 focus-within:border-[#2a9d8f] transition-all duration-300">
+      {/* AREA INPUT */}
+      <div className="p-3 bg-white border-t border-gray-50">
+        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full px-2 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-[#2a9d8f]/50 focus-within:border-[#2a9d8f] transition-all duration-300">
             <input
               ref={inputRef} 
-              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-base px-4 outline-none"
+              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-sm px-4 outline-none"
               placeholder="Scrivi qui la tua domanda..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -124,20 +122,19 @@ export default function ChatWidget() {
               onClick={sendMessage}
               disabled={loading || !input.trim()}
               className={`
-                w-10 h-10 flex items-center justify-center rounded-full text-white transition-all duration-200 flex-shrink-0
+                w-8 h-8 flex items-center justify-center rounded-full text-white transition-all duration-200 flex-shrink-0
                 ${loading || !input.trim() 
                     ? "bg-gray-300 cursor-not-allowed" 
-                    : "bg-[#2a9d8f] hover:bg-[#238b7e] shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95"
+                    : "bg-[#2a9d8f] hover:bg-[#238b7e] shadow-md transform hover:scale-105"
                 }
               `}
             >
-              {/* Icona Aereo di carta */}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 ml-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 ml-0.5">
                 <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
               </svg>
             </button>
         </div>
-        <p className="text-center text-[10px] text-gray-300 mt-2">
+        <p className="text-center text-[10px] text-gray-300 mt-1.5">
             L'IA può commettere errori.
         </p>
       </div>
