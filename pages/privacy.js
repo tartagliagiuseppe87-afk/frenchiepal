@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
                         </div>
                         <div className="pl-11">
                             <p className="text-gray-600 leading-relaxed">
-                                I log delle conversazioni vengono conservati per un periodo massimo di <strong>12 mesi</strong>. Tale periodo è ritenuto necessario per l'analisi storica dei malfunzionamenti e il miglioramento progressivo del servizio. Alla scadenza, i dati vengono eliminati automaticamente o sovrascritti.
+                                I log delle conversazioni vengono conservati per un periodo massimo di <strong>6 mesi</strong>. Tale periodo è ritenuto necessario per l'analisi storica dei malfunzionamenti e il miglioramento progressivo del servizio. Alla scadenza, i dati vengono eliminati.
                             </p>
                         </div>
                     </section>
