@@ -1,50 +1,54 @@
 // utils/firestore.js
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, collection, setDoc, doc, serverTimestamp } from "firebase/firestore";
+// 🚨 AGGIUNTO 'deleteDoc' agli import
+import { getFirestore, collection, setDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
-// Definiamo le variabili globali, ma le inizializziamo SOLO nella funzione
 let app;
 let db;
 
-// 🚨 NUOVA FUNZIONE DI INIZIALIZZAZIONE SICURA
 function initializeFirebase() {
-    if (db) return; // Se è già inizializzato, esci
+    if (db) return;
 
-    const firebaseConfig = {
+    const config = {
       apiKey: process.env.FIREBASE_API_KEY,
       projectId: process.env.FIREBASE_PROJECT_ID,
       appId: process.env.FIREBASE_APP_ID, 
     };
 
-    // Aggiungiamo un controllo di sicurezza per Vercel
-    if (!firebaseConfig.apiKey) {
+    if (!config.apiKey) {
       console.warn("⚠️ Firebase non configurato. Log disabilitato.");
       return;
     }
 
-    // Inizializza l'app e il database
-    app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    app = !getApps().length ? initializeApp(config) : getApp();
     db = getFirestore(app);
 }
 
-// 🚨 MODIFICA DELLA FUNZIONE: Accetta il nome della collezione e il tag di stato
+
 export async function updateChatSession(sessionId, messages, collectionName, statusTag) {
   
   initializeFirebase(); 
   if (!db) return;
   
   try {
-    // 🚨 Usa il nome della collezione passato (es. full_chat_sessions o sensitive_review)
+    // 1. Salva/Aggiorna nella collezione corretta (che sia 'full' o 'sensitive')
     const sessionDocRef = doc(db, collectionName, sessionId);
     
-    // setDoc aggiorna o crea
     await setDoc(sessionDocRef, {
       session_id: sessionId,
       total_messages: messages.length,
       history: messages,
-      privacy_status: statusTag, // 🚨 Nuovo campo per la revisione
+      privacy_status: statusTag || "OK", 
       last_updated: serverTimestamp(), 
     }, { merge: true }); 
+
+    // 🚨 2. PULIZIA: Se stiamo scrivendo in 'sensitive_review', 
+    // dobbiamo assicurarci di CANCELLARE la copia che potrebbe essere rimasta in 'full_chat_sessions'
+    if (collectionName === "sensitive_review") {
+        const oldDocRef = doc(db, "full_chat_sessions", sessionId);
+        // Proviamo a cancellarlo. Se non esiste, non succede nulla di male.
+        await deleteDoc(oldDocRef);
+    }
 
   } catch (err) {
     console.error("Firestore Error: Could not update session", err);
