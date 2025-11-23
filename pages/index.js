@@ -2,6 +2,7 @@
 import React from 'react';
 import ChatWidget from "../components/ChatWidget";
 import Head from 'next/head';
+import Link from 'next/link'; // Importiamo Link per rendere cliccabile il badge
 
 export default function Home() {
   return (
@@ -11,11 +12,10 @@ export default function Home() {
         <link rel="icon" href="/logo.png" />
       </Head>
 
-      {/* 1. HEADER (Stile Glass) */}
+      {/* 1. HEADER */}
       <header className="flex-none py-3 px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
         <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex items-center justify-center">
-              {/* Usa il nuovo logo trasparente */}
               <img src="/logo.png" alt="FrenchiePal Logo" className="w-full h-full object-contain" />
             </div>
             <div>
@@ -28,16 +28,16 @@ export default function Home() {
             </div>
         </div>
         
-        {/* CORREZIONE QUI: Rimosso 'hidden md:flex', ora è solo 'flex' per essere sempre visibile */}
-        <div className="flex items-center gap-2 text-xs text-[#2a9d8f] bg-[#2a9d8f]/10 px-3 py-1 rounded-full font-medium">
+        {/* MODIFICA: Il badge ora è un Link cliccabile */}
+        <Link href="/privacy" className="flex items-center gap-2 text-xs text-[#2a9d8f] bg-[#2a9d8f]/10 px-3 py-1 rounded-full font-medium hover:bg-[#2a9d8f]/20 transition-colors cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
               <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
             </svg>
             <span className="whitespace-nowrap">Privacy Protetta</span>
-        </div>
+        </Link>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Testo come da tua richiesta) */}
+      {/* 2. SEZIONE INTRODUTTIVA */}
       <div className="flex-none px-6 py-4 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3">
@@ -63,14 +63,8 @@ export default function Home() {
         </div>
       </main>
       
-      {/* 4. FOOTER */}
-      <footer className="flex-none py-3 bg-white/50 border-t border-gray-200 text-center z-10 text-xs text-gray-500">
-        <p className="leading-relaxed px-4">
-          ⚠️ <strong>Disclaimer:</strong> FrenchiePal è un assistente virtuale, in caso di emergenza contatta un medico veterinario.
-          <span className="mx-2 hidden sm:inline">•</span>
-          <a href="/privacy" className="hover:text-[#2a9d8f] transition-colors font-semibold mt-1 inline-block sm:mt-0">Clicca qui per Privacy Policy</a>
-        </p>
-      </footer>
+      {/* 4. FOOTER RIMOSSO (Nessun disclaimer visibile in basso) */}
+      
     </div>
   );
 }
