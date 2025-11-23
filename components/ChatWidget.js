@@ -10,7 +10,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Ciao, come aiutare il tuo Frenchie oggi?",
+        "Ciao, come posso aiutare il tuo Frenchie oggi?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -144,3 +144,4 @@ export default function ChatWidget() {
     </div>
   );
 }
+
