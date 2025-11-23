@@ -60,9 +60,9 @@ export default function Home() {
           ⚠️ **Disclaimer Importante:** FrenchiePal è un assistente virtuale e non fornisce pareri medici veterinari. Le informazioni fornite sono a scopo informativo e **non sostituiscono in alcun modo una consulenza professionale**. Per problemi di salute o emergenze, **contatta immediatamente il tuo veterinario di fiducia.**
         </p>
 
-        {/* NUOVO LINK ALLA PRIVACY POLICY (La pagina che creeremo) */}
+       {/* NUOVO LINK ALLA PRIVACY POLICY */}
         <p className="text-xs text-gray-500 text-center mt-4 pt-2 border-t border-gray-200">
-            Consulta l'Informativa sulla <a href="/privacy" className="text-[#2a9d8f] hover:underline font-semibold">Privacy Policy</a> (Legittimo Interesse: Raccolta conversazioni pseudonime per miglioramento servizio).
+            Consulta l'Informativa sulla <a href="/privacy" className="text-[#2a9d8f] hover:underline font-semibold">Privacy Policy</a>. (Base Giuridica: Legittimo Interesse, per miglioramento del servizio).
         </p>
       </div>
       
@@ -71,5 +71,6 @@ export default function Home() {
     </div>
   );
 }
+
 
 
