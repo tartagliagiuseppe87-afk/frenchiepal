@@ -6,6 +6,9 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Definiamo la frase standard che il bot userà per il blocco privacy (Regola 7)
 const PRIVACY_WARNING = "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶";
+// Definiamo un identificatore unico (senza emoji per la robustezza del codice)
+const PRIVACY_KEYWORD = "Per motivi di privacy, ti prego di non inserire i tuoi dati personali";
+
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -22,11 +25,12 @@ Rispetta queste regole:
 4. Risposte brevi (2-3 frasi max), emoji pertinenti.
 5. Mai dare consigli medici; se sintomi → contatta veterinario.
 6. Rispondi solo in italiano.
-7. 🚨 NUOVA REGOLA (Censura): Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE e immediatamente rispondere con la frase standard: "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶". Dopo aver dato l'avviso, nel tuo flusso di pensiero, **NON ripetere il dato personale** nella risposta che invii, per evitare che venga loggato.
+7. 🚨 NUOVA REGOLA (Precisa): Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE e immediatamente rispondere con la frase standard: "${PRIVACY_WARNING}" e non dare l'aiuto richiesto.
 `;
+
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-5-nano",
+      model: "gpt-4o-mini",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
     });
 
@@ -34,13 +38,13 @@ Rispetta queste regole:
 
     const finalMessages = [...messages, { role: "assistant", content: reply }];
 
-    // 🚨 LOGICA DI SALVATAGGIO CONDIZIONALE:
+    // 🚨 LOGICA DI SEPARAZIONE ROBUSTA:
     let collectionName = "full_chat_sessions";
     let statusTag = "OK";
-
-    // Se il bot ha usato la frase di avviso, etichettiamo la sessione
-    if (reply.includes("Per motivi di privacy")) {
-        collectionName = "sensitive_review"; // Sposta la chat in una collezione da revisionare/cancellare
+    
+    // Controlla se la risposta contiene la stringa chiave, rendendo il check meno fragile
+    if (reply.includes(PRIVACY_KEYWORD)) {
+        collectionName = "sensitive_review"; // Sposta la chat in una collezione da revisionare
         statusTag = "NEEDS_REVIEW";
     }
 
@@ -49,8 +53,8 @@ Rispetta queste regole:
 
     res.status(200).json({ reply });
   } catch (err) {
-    // ... (gestione errore) ...
+    console.error(err);
+    console.error("Errore durante chiamata OpenAI:", err.message); 
+    res.status(500).json({ error: "Errore interno" });
   }
 }
-
-
