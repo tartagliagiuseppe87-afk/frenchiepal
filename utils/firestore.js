@@ -27,27 +27,23 @@ function initializeFirebase() {
     db = getFirestore(app);
 }
 
-// Funzione per salvare/aggiornare l'intera sessione
-export async function updateChatSession(sessionId, messages) {
+// 🚨 MODIFICA DELLA FUNZIONE: Accetta il nome della collezione e il tag di stato
+export async function updateChatSession(sessionId, messages, collectionName, statusTag) {
   
-  // 🚨 CHIAMIAMO L'INIZIALIZZAZIONE QUI, dove process.env è disponibile
   initializeFirebase(); 
-  
-  if (!db) {
-    // Se l'inizializzazione fallisce per mancanza di API Key (avviso nel log)
-    return;
-  }
+  if (!db) return;
   
   try {
-    // Usiamo l'ID sessione come ID del documento Firestore
-    const sessionDocRef = doc(db, "full_chat_sessions", sessionId);
+    // 🚨 Usa il nome della collezione passato (es. full_chat_sessions o sensitive_review)
+    const sessionDocRef = doc(db, collectionName, sessionId);
     
-    // setDoc aggiorna se il documento esiste, altrimenti lo crea.
+    // setDoc aggiorna o crea
     await setDoc(sessionDocRef, {
       session_id: sessionId,
       total_messages: messages.length,
-      history: messages, 
-      last_updated: serverTimestamp(), // Data dell'ultimo messaggio
+      history: messages,
+      privacy_status: statusTag, // 🚨 Nuovo campo per la revisione
+      last_updated: serverTimestamp(), 
     }, { merge: true }); 
 
   } catch (err) {
