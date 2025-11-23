@@ -5,72 +5,41 @@ import ChatWidget from "../components/ChatWidget";
 export default function Home() {
   
   return (
-    // 🚨 CORREZIONE SFONDO: Manteniamo lo sfondo uniforme su tutta l'area principale
-    <div className="main-container min-h-screen w-full flex flex-col items-center justify-start bg-[#f4fbf8] font-poppins">
+    // Layout a tutta altezza (h-screen) senza scroll della pagina principale
+    <div className="flex flex-col h-screen bg-[#f8fcfb] font-poppins text-gray-800">
       
-      {/* IMMAGINE BANNER IN ALTO (Correzione definitiva per non sgranare) */}
-      {/* Rimuoviamo classi di altezza fissa; usiamo bg-[#f4fbf8] per uniformare lo sfondo attorno all'immagine */}
-      <div className="w-full bg-[#f4fbf8] shadow-lg flex justify-center items-center py-4"> 
-          <img 
-            src="/hero-image.jpg" 
-            alt="Illustrazione di un Bulldog Francese e un altro cane felici in un prato"
-            // 🚨 CLASSI DEFINITIVE: max-w-full assicura che non fuoriesca, ma le dimensioni sono dettate dal file.
-            className="inline-block h-auto max-w-full shadow-md rounded-lg" 
-          />
-      </div>
-
-      {/* Contenuto principale (Header/Landing) */}
-      <header className="w-full max-w-5xl mx-auto flex-grow px-4 md:px-8 pt-10">
-        <div className="hero-content flex flex-col items-center gap-8 py-10">
-          
-          {/* Testo Hero */}
-          <div className="hero-text w-full text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#2a9d8f] mb-4">
-                FrenchiePal, il miglior amico del tuo bullo! 🐾
+      {/* HEADER COMPATTO */}
+      <header className="flex-none py-4 px-6 flex items-center justify-center md:justify-between bg-white border-b border-gray-100 shadow-sm z-10">
+        <div className="flex items-center gap-3">
+            {/* Logo/Immagine piccola */}
+            <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
+                 <img src="/hero-image.jpg" alt="Logo" className="w-full h-full object-cover" />
+            </div>
+            <h1 className="text-xl md:text-2xl font-bold text-[#2a9d8f] tracking-tight">
+                FrenchiePal
             </h1>
-            
-            <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4 max-w-3xl mx-auto">
-              Ciao Bullo-Mamma/Papà! Siamo un piccolo, ma affiatato, gruppo di *Frenchie-addicted* e amiamo follemente questi adorabili musetti schiacciati. 
-              Il nostro obiettivo è darti una mano nella gestione e nella cura quotidiana del tuo piccolo: siamo super specializzati nei Bulldog Francesi, ma offriamo un supporto valido e amichevole a tutti i proprietari di cani. 
-            </p>
-
-            {/* CTA in verde prima del bottone */}
-            <p className="text-2xl font-semibold text-[#2a9d8f] mt-8 mb-4">
-                Dai forza, che aspetti a provarlo! È gratis!
-            </p>
-
-            {/* PULSANTE CENTRALE (Unico punto di avvio) */}
-            <button
-                onClick={() => {
-                    const chatButton = document.getElementById('chat-toggle-button');
-                    if (chatButton) chatButton.click();
-                }}
-                className="inline-block mb-4 bg-[#2a9d8f] text-white px-8 py-3 font-semibold rounded-full shadow-lg hover:bg-[#268d80] transition-all duration-300 transform hover:translate-y-[-2px] text-xl"
-            >
-                💬 Avvia una chiacchierata
-            </button>
-            
-          </div>
         </div>
+        {/* Slogan visibile solo su desktop */}
+        <p className="hidden md:block text-sm text-gray-500 font-medium">
+            Il tuo esperto di Bulldog Francesi 🐾
+        </p>
       </header>
-      
-      {/* DISCLAIMER IN BASSO (Neutro) */}
-      <div className="w-full max-w-5xl mx-auto mt-12 mb-4 p-4 border-t border-gray-300">
-        <p className="text-sm text-gray-600 text-center">
-          ⚠️ **Disclaimer Importante:** FrenchiePal è un assistente virtuale e non fornisce pareri medici veterinari. Le informazioni fornite sono a scopo informativo e **non sostituiscono in alcun modo una consulenza professionale**. Per problemi di salute o emergenze, **contatta immediatamente il tuo veterinario di fiducia.**
-        </p>
 
-       {/* NUOVO LINK ALLA PRIVACY POLICY */}
-        <p className="text-xs text-gray-500 text-center mt-4 pt-2 border-t border-gray-200">
-            Consulta l'Informativa sulla <a href="/privacy" className="text-[#2a9d8f] hover:underline font-semibold">Privacy Policy</a>. (Base Giuridica: Legittimo Interesse, per miglioramento del servizio).
-        </p>
-      </div>
+      {/* CORPO CENTRALE - La Chat occupa tutto lo spazio rimanente */}
+      <main className="flex-grow p-4 md:p-6 overflow-hidden flex flex-col items-center justify-center">
+        <div className="w-full max-w-4xl h-full flex flex-col">
+            {/* Componente Chat (ora occupa il 100% di questo contenitore) */}
+            <ChatWidget />
+        </div>
+      </main>
       
-      {/* Componente Chat Flottante (gestisce l'apertura a destra) */}
-      <ChatWidget />
+      {/* FOOTER MINIMAL */}
+      <footer className="flex-none py-2 text-center bg-[#f8fcfb]">
+        <p className="text-[10px] md:text-xs text-gray-400 px-4">
+          ⚠️ Non è un medico veterinario. <a href="/privacy" className="hover:underline text-[#2a9d8f]">Privacy Policy</a>.
+        </p>
+      </footer>
+
     </div>
   );
 }
-
-
-
