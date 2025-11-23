@@ -139,9 +139,10 @@ export default function ChatWidget() {
             </button>
         </div>
         <p className="text-center text-[10px] text-gray-300 mt-1.5">
-            L'IA può commettere errori.
+            Il sistema può commettere errori.
         </p>
       </div>
     </div>
   );
 }
+
