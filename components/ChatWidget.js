@@ -63,8 +63,8 @@ export default function ChatWidget() {
   };
 
   return (
-    // RIMOSSI bordi e ombre esterne per integrare nel layout full-screen
-    <div className="flex flex-col w-full h-full bg-transparent overflow-hidden">
+    // CONTENITORE PRINCIPALE DELLA CHAT (Nuovo Stile: Bordo e Ombra)
+    <div className="flex flex-col w-full h-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"> 
       
       {/* AREA MESSAGGI */}
       <div className="flex-grow p-4 overflow-y-auto flex flex-col gap-4">
@@ -77,8 +77,8 @@ export default function ChatWidget() {
               className={`
                 max-w-[85%] md:max-w-[70%] p-3 md:p-4 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm
                 ${m.role === "user" 
-                  ? "bg-[#2a9d8f] text-white rounded-br-sm" // Utente verde
-                  : "bg-white text-gray-800 border border-gray-200 rounded-bl-sm" // Bot bianco
+                  ? "bg-[#2a9d8f] text-white rounded-br-md" // Utente Verde Scuro
+                  : "bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-md" // Bot Grigio Chiaro
                 }
               `}
             >
@@ -89,7 +89,7 @@ export default function ChatWidget() {
         
         {loading && (
             <div className="flex justify-start">
-                <div className="bg-white p-4 rounded-2xl rounded-bl-sm border border-gray-200 shadow-sm">
+                <div className="bg-gray-100 p-4 rounded-2xl rounded-bl-md border border-gray-200 shadow-sm">
                     <div className="flex space-x-2 items-center">
                         <div className="w-2 h-2 bg-[#2a9d8f] rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-[#2a9d8f] rounded-full animate-bounce delay-75"></div>
@@ -102,11 +102,11 @@ export default function ChatWidget() {
       </div>
 
       {/* AREA INPUT */}
-      <div className="p-4 bg-transparent">
-        <div className="flex items-center bg-white border border-gray-300 rounded-full px-2 py-2 shadow-md focus-within:ring-2 focus-within:ring-[#2a9d8f] focus-within:border-transparent transition-all">
+      <div className="p-4 bg-white border-t border-gray-100">
+        <div className="flex items-center bg-gray-50 border border-gray-300 rounded-full px-2 py-2 shadow-inner focus-within:ring-2 focus-within:ring-[#2a9d8f] focus-within:border-transparent transition-all">
             <input
               ref={inputRef} 
-              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-base px-4 outline-none"
+              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-base px-4 py-1 outline-none"
               placeholder="Scrivi qui..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
