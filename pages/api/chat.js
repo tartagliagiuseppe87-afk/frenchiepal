@@ -26,7 +26,7 @@ Rispetta queste regole:
 `;
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5-nano",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
     });
 
@@ -52,4 +52,5 @@ Rispetta queste regole:
     // ... (gestione errore) ...
   }
 }
+
 
