@@ -4,8 +4,10 @@ import { updateChatSession } from "../../utils/firestore";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// Frase standard che il bot userà (Regola 7)
+// Frase standard di avviso (Regola 7)
 const PRIVACY_WARNING = "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶";
+// Parole chiave per identificare l'avviso nella cronologia
+const PRIVACY_KEYWORDS = ["motivi di privacy", "dati personali"];
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -32,21 +34,31 @@ Rispetta queste regole:
 
     const reply = completion.choices[0].message.content;
 
-    const finalMessages = [...messages, { role: "assistant", content: reply }];
+    // 1. Creiamo la cronologia completa (quella che è appena successa)
+    let fullHistory = [...messages, { role: "assistant", content: reply }];
 
-    // 🚨 LOGICA DI SEPARAZIONE MIGLIORATA
-    let collectionName = "full_chat_sessions";
-    let statusTag = "OK";
-    
-    // Controlliamo se la risposta contiene parole chiave, invece della frase intera.
-    // È più sicuro se l'AI cambia leggermente la punteggiatura.
-    if (reply.includes("motivi di privacy") || reply.includes("dati personali")) {
-        collectionName = "sensitive_review"; // Sposta in revisione
-        statusTag = "NEEDS_REVIEW";
-    }
+    // 2. 🧹 SANITIZZAZIONE: Ripuliamo i dati sensibili prima di salvare
+    // Scansioniamo la storia. Se troviamo l'avviso del bot, censuriamo il messaggio utente precedente.
+    const sanitizedHistory = fullHistory.map((msg, index) => {
+        // Se questo messaggio è del bot...
+        if (msg.role === 'assistant') {
+            // ...e contiene le parole chiave dell'avviso privacy...
+            const isPrivacyWarning = PRIVACY_KEYWORDS.some(keyword => msg.content.includes(keyword));
+            
+            if (isPrivacyWarning) {
+                // ...allora andiamo a cercare il messaggio precedente (quello dell'utente) nell'array originale
+                if (index > 0 && fullHistory[index - 1].role === 'user') {
+                    // Modifichiamo il messaggio utente nell'array sanitizzato
+                    fullHistory[index - 1].content = "[DATO PERSONALE RIMOSSO PER PRIVACY]";
+                }
+            }
+        }
+        return msg;
+    });
 
-    // Salvataggio
-    await updateChatSession(sessionId, finalMessages, collectionName, statusTag); 
+    // 3. Salviamo sempre nella collezione principale 'full_chat_sessions'
+    // Ora siamo sicuri che è pulita grazie alla sanitizzazione sopra.
+    await updateChatSession(sessionId, sanitizedHistory, "full_chat_sessions", "OK");
 
     res.status(200).json({ reply });
   } catch (err) {
