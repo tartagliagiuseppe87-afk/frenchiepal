@@ -9,8 +9,8 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content:
-        "Ciao! Sono FrenchiePal 🐾. Come posso aiutarti con il tuo amico a quattro zampe oggi? Ma prima mi dici se il tuo cane è un Bullo?"?",
+      // 🚨 ECCO LA RIGA CORRETTA (Senza virgolette extra alla fine)
+      content: "Ciao! Sono FrenchiePal 🐾. Come posso aiutarti con il tuo amico a quattro zampe oggi? Ma prima mi dici se il tuo cane è un Bullo?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -63,7 +63,7 @@ export default function ChatWidget() {
   };
 
   return (
-    // CONTENITORE PRINCIPALE DELLA CHAT (Nuovo Stile: Bordo e Ombra)
+    // CONTENITORE PRINCIPALE DELLA CHAT
     <div className="flex flex-col w-full h-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"> 
       
       {/* AREA MESSAGGI */}
@@ -77,8 +77,8 @@ export default function ChatWidget() {
               className={`
                 max-w-[85%] md:max-w-[70%] p-3 md:p-4 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm
                 ${m.role === "user" 
-                  ? "bg-[#2a9d8f] text-white rounded-br-md" // Utente Verde Scuro
-                  : "bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-md" // Bot Grigio Chiaro
+                  ? "bg-[#2a9d8f] text-white rounded-br-md" 
+                  : "bg-gray-100 text-gray-800 border border-gray-200 rounded-bl-md" 
                 }
               `}
             >
@@ -130,4 +130,3 @@ export default function ChatWidget() {
     </div>
   );
 }
-
