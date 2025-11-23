@@ -4,6 +4,9 @@ import { updateChatSession } from "../../utils/firestore";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// Definiamo la frase standard che il bot userà per il blocco privacy (Regola 7)
+const PRIVACY_WARNING = "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -32,13 +35,21 @@ Rispetta queste regole:
 
     const finalMessages = [...messages, { role: "assistant", content: reply }];
 
-    // SALVATAGGIO: Aggiorna il documento in Firestore ad ogni messaggio
-    await updateChatSession(sessionId, finalMessages);
+    // 🚨 LOGICA DI SALVATAGGIO CONDIZIONALE:
+    let collectionName = "full_chat_sessions";
+    let statusTag = "OK";
+
+    // Se il bot ha usato la frase di avviso, etichettiamo la sessione
+    if (reply.includes("Per motivi di privacy")) {
+        collectionName = "sensitive_review"; // Sposta la chat in una collezione da revisionare/cancellare
+        statusTag = "NEEDS_REVIEW";
+    }
+
+    // Usiamo la funzione di log aggiornata per salvare nella collezione corretta
+    await updateChatSession(sessionId, finalMessages, collectionName, statusTag); 
 
     res.status(200).json({ reply });
   } catch (err) {
-    console.error(err);
-    console.error("Errore durante chiamata OpenAI:", err.message); 
-    res.status(500).json({ error: "Errore interno" });
+    // ... (gestione errore) ...
   }
 }
