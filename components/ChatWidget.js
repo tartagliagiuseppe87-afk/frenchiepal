@@ -10,7 +10,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Ciao, come posso aiutare il tuo Frenchie oggi🐾?",
+        "Ciao, come posso aiutare il tuo Frenchie oggi?🐾",
     },
   ]);
   const [input, setInput] = useState("");
@@ -66,16 +66,15 @@ export default function ChatWidget() {
     <div className="flex flex-col w-full h-full bg-white">
       
       {/* AREA MESSAGGI */}
-      <div className="flex-grow p-4 md:p-6 overflow-y-auto flex flex-col gap-4 bg-white scroll-smooth">
+      <div className="flex-grow p-4 md:p-6 overflow-y-auto flex flex-col gap-3 bg-white scroll-smooth">
         {messages.map((m, i) => (
           <div 
             key={i} 
             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
           >
-            {/* MODIFICA QUI: Avatar con il Logo invece del Robot */}
+            {/* Avatar Bot (Ridimensionato per proporzione) */}
             {m.role === "assistant" && (
-                <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border border-[#2a9d8f]/20 mr-2">
-                    {/* Punta al file logo.png che hai caricato in public */}
+                <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 border border-[#2a9d8f]/20 mr-2 mt-1">
                     <img 
                         src="/logo.png" 
                         alt="FrenchiePal" 
@@ -86,7 +85,8 @@ export default function ChatWidget() {
 
             <div 
               className={`
-                max-w-[85%] md:max-w-[75%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm
+                /* MODIFICHE QUI: Larghezza ridotta e padding ridotto per compattare */
+                max-w-[80%] md:max-w-[65%] px-3 py-2 rounded-xl text-sm leading-relaxed shadow-sm
                 ${m.role === "user" 
                   ? "bg-[#2a9d8f] text-white rounded-tr-none" // Utente
                   : "bg-[#f4f6f8] text-gray-800 rounded-tl-none border border-gray-100" // Bot
@@ -99,8 +99,8 @@ export default function ChatWidget() {
         ))}
         
         {loading && (
-            <div className="flex justify-start items-center ml-9">
-                <div className="bg-[#f4f6f8] px-3 py-2 rounded-2xl rounded-tl-none border border-gray-100 flex space-x-1">
+            <div className="flex justify-start items-center ml-8">
+                <div className="bg-[#f4f6f8] px-3 py-2 rounded-xl rounded-tl-none border border-gray-100 flex space-x-1">
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-75"></div>
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-150"></div>
@@ -145,4 +145,3 @@ export default function ChatWidget() {
     </div>
   );
 }
-
