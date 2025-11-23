@@ -4,9 +4,7 @@ import { updateChatSession } from "../../utils/firestore";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// Frase standard di avviso Privacy (Regola 7)
 const PRIVACY_WARNING = "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶";
-// Parole chiave per identificare l'avviso nella cronologia
 const PRIVACY_KEYWORDS = ["motivi di privacy", "dati personali"];
 
 export default async function handler(req, res) {
@@ -25,16 +23,15 @@ Rispetta queste regole:
 6. Rispondi solo in italiano.
 7. 🚨 REGOLA PRIVACY: Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE rispondere con questa frase esatta: "${PRIVACY_WARNING}" e non dare l'aiuto richiesto.
 
-8. 📝 REGOLA FEEDBACK (CHIUSURA): 
-   Se capisci che l'utente sta chiudendo la conversazione (es. dice "grazie", "ciao", "a presto", "tutto chiaro", "buona giornata"), NON limitarti a salutare.
-   Rispondi ringraziando e poi scrivi ESATTAMENTE questo elenco puntato per chiedere feedback (usa un tono gentile):
+8. 🔄 REGOLA CHIUSURA GRADUALE (IMPORTANTE): 
+   - Se l'utente ti ringrazia o ti saluta (es. "grazie", "ottimo", "ok"), NON chiedere subito il feedback. Invece rispondi: "Prego! 🥰 C'è altro che vuoi chiedermi o qualche altra curiosità sul tuo Bullo?"
    
-   "Prima di lasciarci, ci aiuteresti a migliorare con 3 risposte veloci? 🦴
+   - SOLO SE l'utente risponde di "NO", "niente altro", "tutto chiaro" o fa capire esplicitamente che ha finito, ALLORA scrivi ESATTAMENTE questo elenco per il feedback:
+   
+   "Perfetto! Prima di lasciarci, ci aiuteresti a migliorare con 3 risposte veloci? 🦴
    1) Come valuti questa esperienza?
    2) Hai suggerimenti per il futuro?
    3) Ti piacerebbe ricevere qui consigli su Food 🍖, Servizi 🏥 o Gestione del cane 🐕?"
-   
-   Se l'utente ha già risposto a queste domande nei messaggi precedenti, allora puoi salutare definitivamente.
 `;
 
   try {
@@ -48,7 +45,7 @@ Rispetta queste regole:
     // 1. Creiamo la cronologia completa
     let fullHistory = [...messages, { role: "assistant", content: reply }];
 
-    // 2. 🧹 SANITIZZAZIONE (Privacy by Design)
+    // 2. Sanitizzazione
     const sanitizedHistory = fullHistory.map((msg, index) => {
         if (msg.role === 'assistant') {
             const isPrivacyWarning = PRIVACY_KEYWORDS.some(keyword => msg.content.includes(keyword));
