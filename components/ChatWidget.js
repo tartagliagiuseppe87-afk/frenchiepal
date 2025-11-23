@@ -66,15 +66,15 @@ export default function ChatWidget() {
     <div className="flex flex-col w-full h-full bg-white">
       
       {/* AREA MESSAGGI */}
-      <div className="flex-grow p-4 md:p-6 overflow-y-auto flex flex-col gap-3 bg-white scroll-smooth">
+      <div className="flex-grow p-3 md:p-4 overflow-y-auto flex flex-col gap-3 bg-white scroll-smooth">
         {messages.map((m, i) => (
           <div 
             key={i} 
             className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
           >
-            {/* Avatar Bot (Ridimensionato per proporzione) */}
+            {/* Avatar Bot (Ridimensionato a w-5 h-5) */}
             {m.role === "assistant" && (
-                <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 border border-[#2a9d8f]/20 mr-2 mt-1">
+                <div className="w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border border-[#2a9d8f]/20 mr-2 mt-1">
                     <img 
                         src="/logo.png" 
                         alt="FrenchiePal" 
@@ -85,11 +85,11 @@ export default function ChatWidget() {
 
             <div 
               className={`
-                /* MODIFICHE QUI: Larghezza ridotta e padding ridotto per compattare */
-                max-w-[80%] md:max-w-[65%] px-3 py-2 rounded-xl text-sm leading-relaxed shadow-sm
+                /* MODIFICHE: Larghezza max 75%, padding ridotto, font text-xs */
+                max-w-[75%] md:max-w-[60%] px-3 py-2 rounded-xl text-xs leading-relaxed shadow-sm
                 ${m.role === "user" 
-                  ? "bg-[#2a9d8f] text-white rounded-tr-none" // Utente
-                  : "bg-[#f4f6f8] text-gray-800 rounded-tl-none border border-gray-100" // Bot
+                  ? "bg-[#2a9d8f] text-white rounded-tr-none" 
+                  : "bg-[#f4f6f8] text-gray-800 rounded-tl-none border border-gray-100" 
                 }
               `}
             >
@@ -99,8 +99,8 @@ export default function ChatWidget() {
         ))}
         
         {loading && (
-            <div className="flex justify-start items-center ml-8">
-                <div className="bg-[#f4f6f8] px-3 py-2 rounded-xl rounded-tl-none border border-gray-100 flex space-x-1">
+            <div className="flex justify-start items-center ml-7">
+                <div className="bg-[#f4f6f8] px-2 py-1.5 rounded-xl rounded-tl-none border border-gray-100 flex space-x-1">
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-75"></div>
                     <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce delay-150"></div>
@@ -111,12 +111,12 @@ export default function ChatWidget() {
       </div>
 
       {/* AREA INPUT */}
-      <div className="p-3 bg-white border-t border-gray-50">
-        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full px-2 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-[#2a9d8f]/50 focus-within:border-[#2a9d8f] transition-all duration-300">
+      <div className="p-2 bg-white border-t border-gray-50">
+        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full px-2 py-1 shadow-sm focus-within:ring-1 focus-within:ring-[#2a9d8f]/50 focus-within:border-[#2a9d8f] transition-all duration-300">
             <input
               ref={inputRef} 
-              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-sm px-4 outline-none"
-              placeholder="Scrivi qui la tua domanda..."
+              className="flex-grow bg-transparent border-none text-gray-700 placeholder-gray-400 focus:ring-0 text-xs px-3 outline-none"
+              placeholder="Scrivi qui..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -126,20 +126,20 @@ export default function ChatWidget() {
               onClick={sendMessage}
               disabled={loading || !input.trim()}
               className={`
-                w-8 h-8 flex items-center justify-center rounded-full text-white transition-all duration-200 flex-shrink-0
+                w-7 h-7 flex items-center justify-center rounded-full text-white transition-all duration-200 flex-shrink-0
                 ${loading || !input.trim() 
                     ? "bg-gray-300 cursor-not-allowed" 
                     : "bg-[#2a9d8f] hover:bg-[#238b7e] shadow-md transform hover:scale-105"
                 }
               `}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 ml-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 ml-0.5">
                 <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
               </svg>
             </button>
         </div>
-        <p className="text-center text-[10px] text-gray-300 mt-1.5">
-            L'IA può commettere errori.
+        <p className="text-center text-[9px] text-gray-300 mt-1">
+            IA può sbagliare.
         </p>
       </div>
     </div>
