@@ -22,9 +22,8 @@ Rispetta queste regole:
 4. Risposte brevi (2-3 frasi max), emoji pertinenti.
 5. Mai dare consigli medici; se sintomi → contatta veterinario.
 6. Rispondi solo in italiano.
-7. 🚨 NUOVA REGOLA: Se l'utente menziona il proprio nome, email o indirizzo, rispondi immediatamente con la frase standard: "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶" Non dare l'aiuto richiesto, ma solo questo avviso.
+7. 🚨 NUOVA REGOLA (Censura): Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE e immediatamente rispondere con la frase standard: "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶". Dopo aver dato l'avviso, nel tuo flusso di pensiero, **NON ripetere il dato personale** nella risposta che invii, per evitare che venga loggato.
 `;
-
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -53,3 +52,4 @@ Rispetta queste regole:
     // ... (gestione errore) ...
   }
 }
+
