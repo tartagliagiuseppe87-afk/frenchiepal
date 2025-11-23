@@ -12,9 +12,10 @@ export default function Home() {
       {/* 1. HEADER (Stile Glass) */}
       <header className="flex-none py-3 px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
         <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                 <img src="/hero-image.jpg" alt="Logo" className="w-full h-full object-cover" />
-            </div>
+            <div className="w-10 h-10 flex items-center justify-center">
+     {/* Usa il nuovo logo trasparente, senza bordi o crop strani */}
+     <img src="/logo.png" alt="FrenchiePal Logo" className="w-full h-full object-contain" />
+</div>
             <div>
                 <h1 className="text-lg font-bold text-[#2a9d8f] tracking-tight leading-none">
                     FrenchiePal
@@ -69,6 +70,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
