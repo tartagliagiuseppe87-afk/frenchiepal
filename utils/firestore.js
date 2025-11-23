@@ -1,7 +1,7 @@
 // utils/firestore.js
 import { initializeApp, getApps, getApp } from "firebase/app";
-// 🚨 AGGIUNTO 'deleteDoc' agli import
-import { getFirestore, collection, setDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
+// 🚨 AGGIUNTO 'writeBatch' agli import
+import { getFirestore, doc, serverTimestamp, writeBatch } from "firebase/firestore";
 
 let app;
 let db;
@@ -31,10 +31,14 @@ export async function updateChatSession(sessionId, messages, collectionName, sta
   if (!db) return;
   
   try {
-    // 1. Salva/Aggiorna nella collezione corretta (che sia 'full' o 'sensitive')
+    // 1. Creiamo un Batch (un pacchetto di operazioni)
+    const batch = writeBatch(db);
+
+    // 2. Prepariamo il riferimento per il salvataggio (nella collezione corretta)
     const sessionDocRef = doc(db, collectionName, sessionId);
     
-    await setDoc(sessionDocRef, {
+    // Aggiungiamo l'operazione di scrittura al batch
+    batch.set(sessionDocRef, {
       session_id: sessionId,
       total_messages: messages.length,
       history: messages,
@@ -42,15 +46,17 @@ export async function updateChatSession(sessionId, messages, collectionName, sta
       last_updated: serverTimestamp(), 
     }, { merge: true }); 
 
-    // 🚨 2. PULIZIA: Se stiamo scrivendo in 'sensitive_review', 
-    // dobbiamo assicurarci di CANCELLARE la copia che potrebbe essere rimasta in 'full_chat_sessions'
+    // 3. PULIZIA ATOMICA: Se stiamo scrivendo in 'sensitive_review', 
+    // aggiungiamo al batch l'ordine di CANCELLARE dalla cartella 'full_chat_sessions'
     if (collectionName === "sensitive_review") {
         const oldDocRef = doc(db, "full_chat_sessions", sessionId);
-        // Proviamo a cancellarlo. Se non esiste, non succede nulla di male.
-        await deleteDoc(oldDocRef);
+        batch.delete(oldDocRef);
     }
 
+    // 4. Eseguiamo tutto insieme ("Committiamo" il batch)
+    await batch.commit();
+
   } catch (err) {
-    console.error("Firestore Error: Could not update session", err);
+    console.error("Firestore Error: Could not update session batch", err);
   }
 }
