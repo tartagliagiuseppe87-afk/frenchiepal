@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 export default function PrivacyPolicy() {
     // VARIABILI DA SOSTITUIRE
-    const titolare = "Giuseppe Tartaglia"; // Inserisci il tuo nome reale qui
+    const titolare = "nometitolare"; // Inserisci il tuo nome reale qui
     const emailContatto = "tuaemail@esempio.com"; // Inserisci la tua email qui
 
     return (
@@ -45,7 +45,7 @@ export default function PrivacyPolicy() {
                         </div>
                         <div className="pl-11">
                             <p className="text-gray-600 leading-relaxed mb-3">
-                                FrenchiePal registra le conversazioni degli utenti esclusivamente per finalità di **miglioramento del servizio** e ottimizzazione dei modelli linguistici.
+                                FrenchiePal registra le conversazioni degli utenti esclusivamente per finalità di <strong>miglioramento del servizio</strong> e ottimizzazione dei modelli linguistici.
                             </p>
                             <div className="bg-gray-50 border-l-4 border-[#2a9d8f] p-4 rounded-r-lg text-sm text-gray-700 italic">
                                 La base giuridica che autorizza il trattamento è il <strong>Legittimo Interesse del Titolare</strong> (art. 6, par. 1, lett. f del GDPR). Il trattamento è limitato ai soli dati testuali e non è finalizzato alla profilazione o al marketing.
@@ -85,7 +85,7 @@ export default function PrivacyPolicy() {
                         </div>
                         <div className="pl-11">
                             <p className="text-gray-600 leading-relaxed">
-                                I log delle conversazioni vengono conservati per un periodo massimo di <strong>12 mesi</strong>, dopodiché vengono eliminati automaticamente dal database.
+                                I log delle conversazioni vengono conservati per un periodo massimo di <strong>3 mesi</strong>, dopodiché vengono eliminati automaticamente dal database.
                             </p>
                         </div>
                     </section>
