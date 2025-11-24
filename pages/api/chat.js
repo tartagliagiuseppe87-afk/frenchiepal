@@ -1,6 +1,6 @@
 // pages/api/chat.js
 import OpenAI from "openai";
-import { updateChatSession } from "../../utils/firestore"; 
+import { updateChatSession } from "../../utils/firestore";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -10,10 +10,10 @@ const PRIVACY_KEYWORDS = ["motivi di privacy", "dati personali", "email", "telef
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const { messages, sessionId } = req.body; 
+  const { messages, sessionId } = req.body;
   if (!messages || !sessionId) return res.status(400).json({ error: "Dati sessione o messaggi mancanti." });
 
-  // IL TUO PROMPT FINALE E DEFINITIVO
+  // PROMPT DEFINITIVO (Con tutte le regole incluse: 4 Medica, 8 Salvagente)
   const systemPrompt = `
 Sei "FrenchiePal", assistente esperto per proprietari di cani, con una Iper-Specializzazione nei Bulldog Francesi 🐾.
 
@@ -42,7 +42,7 @@ Rispetta queste regole di comportamento:
    - ✅ **OBBLIGATORIO:** Chiedere se serve altro in generale.
    - *Esempi corretti:* "Posso aiutarti con altro?", "C'è altro che vuoi sapere sul tuo Bullo?", "Hai altre domande per me?"
    
-   4. 🏥 SICUREZZA MEDICA:
+4. 🏥 SICUREZZA MEDICA:
    - **IMPORTANTE:** Inizia SEMPRE qualsiasi consiglio su salute/alimentazione con: "Ricorda che non sono un veterinario, ma..."
    - **Piccoli problemi** (igiene, prurito leggero, gestione cibo): Dai consigli pratici, specifici e "trucchi del mestiere".
    - **Emergenze** (svenimenti, sangue, paralisi, respiro rauco a riposo): Sii fermo. Spiega il rischio specifico per i Frenchie e manda SUBITO dal veterinario.
@@ -64,17 +64,33 @@ Rispetta queste regole di comportamento:
    - ✅ **OBBLIGATORIO:** Rispondere SOLO ringraziando per il feedback e confermando di essere disponibile per nuove chat.
    - *Esempio di risposta corretta:* "Grazie mille per il tuo feedback! Ne terrò conto. 🐾 Se in futuro avrai altre domande, sono qui."
 
-   8. 🛡️ REGOLA SALVAGENTE (FUORI CONTESTO):
+8. 🛡️ REGOLA SALVAGENTE (FUORI CONTESTO):
    - Se l'utente parla di argomenti che non c'entrano NULLA con cani, Bulldog Francesi o la loro gestione (es. meteo, politica, calcio, o scrive caratteri a caso):
    - NON cercare di collegarlo ai cani forzatamente.
    - Rispondi educatamente: "Scusa, sono allenato solo per parlare dei nostri amici Bulldog Francesi! 🐾 Hai domande su di loro?"
 `;
 
   try {
+    // --- LOGICA PER CATTURARE IL FEEDBACK DI VALIDAZIONE ---
+    let extraDataForFirestore = {};
+    // Trova l'ultimo messaggio dell'assistente nella cronologia
+    const lastAssistantMessage = messages.slice().reverse().find(m => m.role === 'assistant');
+
+    // Se l'ultimo messaggio dell'assistente conteneva la richiesta di feedback...
+    if (lastAssistantMessage && lastAssistantMessage.content.includes("Ti piacerebbe ricevere qui consigli su Food")) {
+        // ...allora l'ultimo messaggio dell'utente è la risposta a quel feedback.
+        extraDataForFirestore = {
+            validation_interest: messages[messages.length - 1].content, // Salviamo la risposta (es. "Food")
+            status: "closed_with_feedback" // Cambiamo lo stato della chat
+        };
+        console.log("Validazione catturata:", extraDataForFirestore);
+    }
+    // ------------------------------------------------------
+
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o", 
+      model: "gpt-4o",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
-      temperature: 0.8, // Temperatura bassa per massima aderenza alle regole complesse
+      temperature: 0.8,
     });
 
     const reply = completion.choices[0].message.content;
@@ -94,7 +110,14 @@ Rispetta queste regole di comportamento:
         return msg;
     });
 
-    await updateChatSession(sessionId, sanitizedHistory, "full_chat_sessions", "OK");
+    // Salvataggio su Firestore (passando eventuali dati extra)
+    await updateChatSession(
+        sessionId,
+        sanitizedHistory,
+        "full_chat_sessions",
+        extraDataForFirestore.status || "OK", // Usa lo stato "closed_with_feedback" se presente, altrimenti "OK"
+        extraDataForFirestore // Passa l'oggetto che contiene l'interesse di validazione
+    );
 
     res.status(200).json({ reply });
   } catch (err) {
@@ -102,6 +125,3 @@ Rispetta queste regole di comportamento:
     res.status(500).json({ error: "Errore interno" });
   }
 }
-
-
-
