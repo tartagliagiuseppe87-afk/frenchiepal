@@ -141,10 +141,11 @@ export default function ChatWidget() {
             </button>
         </div>
         <p className="text-center text-[10px] text-gray-400 mt-2">
-            FrenchiePal è un assistente virtuale che può commettere errori. In caso di emergenza contatta un medico veterinario.
+            FrenchiePal è un assistente virtuale che può commettere errori e non sostuisce un veterinario. In caso di emergenza contatta un medico veterinario.
         </p>
       </div>
     </div>
   );
 }
+
 
