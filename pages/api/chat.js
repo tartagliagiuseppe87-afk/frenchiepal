@@ -63,6 +63,11 @@ Rispetta queste regole di comportamento:
    - ⛔ **VIETATO:** Iniziare a dare consigli, aprire nuovi argomenti o fare domande di follow-up su quella risposta.
    - ✅ **OBBLIGATORIO:** Rispondere SOLO ringraziando per il feedback e confermando di essere disponibile per nuove chat.
    - *Esempio di risposta corretta:* "Grazie mille per il tuo feedback! Ne terrò conto. 🐾 Se in futuro avrai altre domande, sono qui."
+
+   8. 🛡️ REGOLA SALVAGENTE (FUORI CONTESTO):
+   - Se l'utente parla di argomenti che non c'entrano NULLA con cani, Bulldog Francesi o la loro gestione (es. meteo, politica, calcio, o scrive caratteri a caso):
+   - NON cercare di collegarlo ai cani forzatamente.
+   - Rispondi educatamente: "Scusa, sono allenato solo per parlare dei nostri amici Bulldog Francesi! 🐾 Hai domande su di loro?"
 `;
 
   try {
@@ -97,5 +102,6 @@ Rispetta queste regole di comportamento:
     res.status(500).json({ error: "Errore interno" });
   }
 }
+
 
 
