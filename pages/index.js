@@ -33,7 +33,7 @@ export default function Home() {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
               <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
             </svg>
-            <span className="whitespace-nowrap">Privacy Protetta</span>
+            <span className="whitespace-nowrap">Qui per info Privacy</span>
         </Link>
       </header>
 
@@ -41,12 +41,12 @@ export default function Home() {
       <div className="flex-none px-4 py-1 text-center md:px-6 md:py-2">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-0.5 tracking-tight">
-                Il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
+                FrenchiePal, il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
             
             <div className="text-sm text-gray-600 leading-snug space-y-0.5 mb-1">
                 <p>
-                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie addicted</em>.
+                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>.
                 </p>
                 <p className="font-medium text-gray-700">
                   Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
@@ -69,3 +69,4 @@ export default function Home() {
     </div>
   );
 }
+
