@@ -79,7 +79,7 @@ export default function ChatWidget() {
                     <img 
                         src="/logo.png" 
                         alt="FrenchiePal" 
-                        className="w-full h-full rounded-full object-cover border border-[#2a9d8f]/20 shadow-sm"
+                        className="w-full h-full rounded-full object-cover border border-[#2a9d8f]/20 shadow-sm p-0.5"
                     />
                     {/* Pallino Verde Pulsante */}
                     <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
@@ -147,6 +147,7 @@ export default function ChatWidget() {
     </div>
   );
 }
+
 
 
 
