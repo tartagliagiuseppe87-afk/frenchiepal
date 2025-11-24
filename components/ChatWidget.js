@@ -74,7 +74,7 @@ export default function ChatWidget() {
           >
             {/* AVATAR BOT CON STATO ONLINE */}
             {m.role === "assistant" && (
-                <div className="relative w-8 h-8 mr-2 flex-shrink-0">
+                <div className="relative w-9 h-9 mr-2 flex-shrink-0 mt-1">
                     {/* Immagine del Logo */}
                     <img 
                         src="/logo.png" 
@@ -147,5 +147,6 @@ export default function ChatWidget() {
     </div>
   );
 }
+
 
 
