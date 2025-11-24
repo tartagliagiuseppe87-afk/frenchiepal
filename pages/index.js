@@ -49,7 +49,7 @@ export default function Home() {
                   Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>.
                 </p>
                 <p className="font-medium text-gray-700">
-                  Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
+                  Stiamo sviluppando un sistema per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
                 <p className="text-sm font-medium text-[#2a9d8f] mt-1"> 
                   🚀 <strong>Ci aiuti a migliorare?</strong> Poni le tue domande specifiche qui sotto.
@@ -69,4 +69,5 @@ export default function Home() {
     </div>
   );
 }
+
 
