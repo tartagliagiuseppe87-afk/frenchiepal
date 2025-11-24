@@ -36,22 +36,22 @@ export default function Home() {
         </Link>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Testo Promozionale Semplice) */}
+      {/* 2. SEZIONE INTRODUTTIVA (Font Aumentato) */}
       <div className="flex-none px-4 py-1 text-center md:px-6 md:py-2">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-0.5 tracking-tight">
-                FrenchiePal, il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
+                FrenchiePal, Il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
             
-            <div className="text-xs text-gray-600 leading-snug space-y-0.5 mb-1">
+            {/* 🚨 MODIFICATO QUI: text-sm per i paragrafi */}
+            <div className="text-sm text-gray-600 leading-snug space-y-0.5 mb-1">
                 <p>
-                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>.
+                  Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie addicted</em>.
                 </p>
                 <p className="font-medium text-gray-700">
                   Stiamo sviluppando un sistema allenato per offrirti le risposte più accurate ai problemi di gestione quotidiana.
                 </p>
-                {/* 🚨 MODIFICATO QUI: Rimosso lo stile "balloon", mantenuto il testo */}
-                <p className="text-[10px] font-medium text-[#2a9d8f] mt-1"> 
+                <p className="text-sm font-medium text-[#2a9d8f] mt-1"> 
                   🚀 <strong>Ci aiuti a migliorare?</strong> Poni le tue domande specifiche qui sotto.
                 </p>
             </div>
@@ -63,8 +63,7 @@ export default function Home() {
         <div className="w-full h-full shadow-2xl rounded-2xl overflow-hidden border border-gray-100 bg-white">
             <ChatWidget />
         </div>
-      </main>    
+      </main>
     </div>
   );
 }
-
