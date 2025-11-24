@@ -5,7 +5,7 @@ import { updateChatSession } from "../../utils/firestore";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const PRIVACY_WARNING = "Grazie! Per motivi di privacy, ti prego di non inserire i tuoi dati personali qui. Continuiamo a parlare del tuo amico a quattro zampe? 🐶";
-const PRIVACY_KEYWORDS = ["motivi di privacy", "dati personali"];
+const PRIVACY_KEYWORDS = ["motivi di privacy", "dati personali", "email", "telefono", "indirizzo"];
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   const { messages, sessionId } = req.body; 
   if (!messages || !sessionId) return res.status(400).json({ error: "Dati sessione o messaggi mancanti." });
 
+  // IL TUO PROMPT FINALE E DEFINITIVO
   const systemPrompt = `
 Sei "FrenchiePal", assistente esperto per proprietari di cani, con una Iper-Specializzazione nei Bulldog Francesi 🐾.
 
@@ -53,16 +54,19 @@ Rispetta queste regole di comportamento:
    2) Hai suggerimenti per il futuro?
    3) Ti piacerebbe ricevere qui consigli su Food 🍖, Servizi 🏥 o Gestione del cane 🐕?"
 
-7. 🛑 REGOLA POST-FEEDBACK (PRIORITÀ MASSIMA - SOVRASCRIVE TUTTO): - **SE il tuo MESSAGGIO PRECEDENTE era esattamente la richiesta delle 3 domande finali (Regola 6),
-    ALLORA:** - Qualsiasi cosa l'utente risponda ora (anche se sembra una richiesta come "Vorrei consigli sul food"), tu devi considerarla SOLO come un feedback.
-    - ⛔ **VIETATO:** Iniziare a dare consigli, aprire nuovi argomenti o fare domande di follow-up su quella risposta.
-    - ✅ **OBBLIGATORIO:** Rispondere SOLO ringraziando per il feedback e confermando di essere disponibile per nuove chat. - *Esempio di risposta corretta:* "Grazie mille per il tuo feedback! Ne terrò conto. 🐾 Se in futuro avrai altre domande, sono qui."
+7. 🛑 REGOLA POST-FEEDBACK (PRIORITÀ MASSIMA - SOVRASCRIVE TUTTO):
+   - **SE il tuo MESSAGGIO PRECEDENTE era esattamente la richiesta delle 3 domande finali (Regola 6), ALLORA:**
+   - Qualsiasi cosa l'utente risponda ora (anche se sembra una richiesta come "Vorrei consigli sul food"), tu devi considerarla SOLO come un feedback.
+   - ⛔ **VIETATO:** Iniziare a dare consigli, aprire nuovi argomenti o fare domande di follow-up su quella risposta.
+   - ✅ **OBBLIGATORIO:** Rispondere SOLO ringraziando per il feedback e confermando di essere disponibile per nuove chat.
+   - *Esempio di risposta corretta:* "Grazie mille per il tuo feedback! Ne terrò conto. 🐾 Se in futuro avrai altre domande, sono qui."
 `;
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o", 
       messages: [{ role: "system", content: systemPrompt }, ...messages],
+      temperature: 0.4, // Temperatura bassa per massima aderenza alle regole complesse
     });
 
     const reply = completion.choices[0].message.content;
@@ -72,7 +76,7 @@ Rispetta queste regole di comportamento:
     // Sanitizzazione Privacy
     const sanitizedHistory = fullHistory.map((msg, index) => {
         if (msg.role === 'assistant') {
-            const isPrivacyWarning = PRIVACY_KEYWORDS.some(keyword => msg.content.includes(keyword));
+            const isPrivacyWarning = PRIVACY_KEYWORDS.some(keyword => msg.content.toLowerCase().includes(keyword));
             if (isPrivacyWarning) {
                 if (index > 0 && fullHistory[index - 1].role === 'user') {
                     fullHistory[index - 1].content = "[DATO PERSONALE RIMOSSO PER PRIVACY]";
@@ -87,9 +91,6 @@ Rispetta queste regole di comportamento:
     res.status(200).json({ reply });
   } catch (err) {
     console.error(err);
-    console.error("Errore durante chiamata OpenAI:", err.message); 
     res.status(500).json({ error: "Errore interno" });
   }
 }
-
-
