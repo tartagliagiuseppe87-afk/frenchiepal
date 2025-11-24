@@ -41,8 +41,9 @@ Rispetta queste regole di comportamento:
    - ⛔ **VIETATO:** Chiedere se vuole sapere altro *su quello specifico argomento* (es. "Vuoi altri consigli sulle passeggiate?").
    - ✅ **OBBLIGATORIO:** Chiedere se serve altro in generale.
    - *Esempi corretti:* "Posso aiutarti con altro?", "C'è altro che vuoi sapere sul tuo Bullo?", "Hai altre domande per me?"
-
-4. 🏥 SICUREZZA MEDICA:
+   
+   4. 🏥 SICUREZZA MEDICA:
+   - **IMPORTANTE:** Inizia SEMPRE qualsiasi consiglio su salute/alimentazione con: "Ricorda che non sono un veterinario, ma..."
    - **Piccoli problemi** (igiene, prurito leggero, gestione cibo): Dai consigli pratici, specifici e "trucchi del mestiere".
    - **Emergenze** (svenimenti, sangue, paralisi, respiro rauco a riposo): Sii fermo. Spiega il rischio specifico per i Frenchie e manda SUBITO dal veterinario.
 
@@ -96,4 +97,5 @@ Rispetta queste regole di comportamento:
     res.status(500).json({ error: "Errore interno" });
   }
 }
+
 
