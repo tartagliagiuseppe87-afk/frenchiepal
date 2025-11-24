@@ -6,13 +6,14 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
+    // Il contenitore principale definisce h-screen e overflow-hidden
     <div className="flex flex-col h-screen bg-gradient-to-b from-[#eafaf7] to-[#ffffff] font-poppins text-gray-800 overflow-hidden">
       <Head>
         <title>FrenchiePal - L'esperto del tuo Bulldog</title>
         <link rel="icon" href="/logo.png" />
       </Head>
 
-      {/* 1. HEADER */}
+      {/* 1. HEADER (MASSIMA COMPRESSIONE VERTICALE) */}
       <header className="flex-none py-1 px-3 md:py-2 md:px-6 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-gray-200/50 z-20 sticky top-0">
         <div className="flex items-center gap-2">
             <div className="w-8 h-8 flex items-center justify-center">
@@ -32,18 +33,17 @@ export default function Home() {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
               <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
             </svg>
-            <span className="whitespace-nowrap">Qui info Privacy</span>
+            <span className="whitespace-nowrap">Privacy Protetta</span>
         </Link>
       </header>
 
-      {/* 2. SEZIONE INTRODUTTIVA (Font Aumentato) */}
+      {/* 2. SEZIONE INTRODUTTIVA (MARGINI MINIMI) */}
       <div className="flex-none px-4 py-1 text-center md:px-6 md:py-2">
         <div className="max-w-3xl mx-auto animate-fade-in-down">
             <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-0.5 tracking-tight">
-                FrenchiePal, Il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
+                Il miglior amico del tuo <span className="text-[#2a9d8f]">Bullo!</span> 🐾
             </h2>
             
-            {/* 🚨 MODIFICATO QUI: text-sm per i paragrafi */}
             <div className="text-sm text-gray-600 leading-snug space-y-0.5 mb-1">
                 <p>
                   Ciao Bullo-Mamma/Papà! Siamo un piccolo team di <em>Frenchie addicted</em>.
@@ -58,12 +58,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3. AREA CHAT (Massimo Spazio Verticale) */}
-      <main className="flex-grow relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center p-2 overflow-hidden"> 
+      {/* 3. AREA CHAT (Contenitore principale che si espande, NESSUN PADDING ESTERNO) */}
+      <main className="flex-grow relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center overflow-hidden"> 
         <div className="w-full h-full shadow-2xl rounded-2xl overflow-hidden border border-gray-100 bg-white">
             <ChatWidget />
         </div>
       </main>
+      
+      {/* FOOTER ELIMINATO */}
     </div>
   );
 }
