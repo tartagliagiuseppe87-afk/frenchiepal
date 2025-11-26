@@ -46,7 +46,7 @@ export default function Home() {
             
             <div className="text-sm text-gray-600 leading-snug space-y-0.5 mb-1">
                 <p>
-                  Ciao Bullo MammaPapà! Siamo un piccolo team di <em>Frenchie addicted</em>.
+                  Siamo un piccolo team di <em>Frenchie addicted</em>.
                 </p>
                 <p className="font-medium text-gray-700">
                   Stiamo sviluppando un sistema per offrirti le risposte più accurate ai problemi di gestione quotidiana.
@@ -69,5 +69,6 @@ export default function Home() {
     </div>
   );
 }
+
 
 
