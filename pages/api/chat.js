@@ -90,7 +90,7 @@ Rispetta queste regole di comportamento:
     // ------------------------------------------------------
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-5-mini-2025-08-07",
+      model: "gpt-5-mini",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
       temperature: 0.8,
     });
