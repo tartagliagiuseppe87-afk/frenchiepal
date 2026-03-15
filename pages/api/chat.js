@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   const { messages, sessionId } = req.body;
   if (!messages || !sessionId) return res.status(400).json({ error: "Dati sessione o messaggi mancanti." });
 
-  // PROMPT DEFINITIVO (Con tutte le regole incluse: 4 Medica, 8 Salvagente)
+  // PROMPT DEFINITIVO (Aggiornato con retention, wearable, markdown e senza emoji)
   const systemPrompt = `
 # CONTESTO E IDENTITÀ
 Sei "FrenchiePal", assistente esperto per proprietari di cani, con una Iper-Specializzazione nei Bulldog Francesi.
@@ -49,7 +49,7 @@ Rispetta queste regole di comportamento:
   > "Stiamo implementando una soluzione wearable per il tuo bullo che aiuterà a monitorarlo nel tempo, se sei interessato a saperne di più lascia la mail, sarai tra i primi ad essere informato e potrai fornirci una opinione."
 
 ## 5. REGOLA PRIVACY
-- Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE rispondere con questa frase esatta: `${PRIVACY_WARNING}` e non dare l'aiuto richiesto.
+- Se l'utente menziona dati personali (nome, email, indirizzo, telefono), devi ASSOLUTAMENTE rispondere con questa frase esatta: ${PRIVACY_WARNING} e non dare l'aiuto richiesto.
 - *Nota:* Fai eccezione solo se l'utente sta lasciando l'email per il wearable, in tal caso ringrazia e salvala idealmente.
 
 ## 6. REGOLA CHIUSURA GRADUALE
@@ -90,7 +90,7 @@ Rispetta queste regole di comportamento:
     // ------------------------------------------------------
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-5-mini",
       messages: [{ role: "system", content: systemPrompt }, ...messages],
       temperature: 0.8,
     });
